@@ -8,7 +8,7 @@ Cadastrar Pedido e associar a Cliente
 
 ===============================================================
 PARA IMPLEMENTAR:
-OK 1 - Adicionar campo apelido na entidade Client pois pode facilitar a busca no banco de dados
+[OK] 1 - Adicionar campo apelido na entidade Client pois pode facilitar a busca no banco de dados
     foi notado que será preciso localizar cliente por apelido para faciltar pois o nome posso nao lembrar depois
 2 - Criar endpoint para criar pedido por apelido
 3 - Mudar o retorno do método findByNickname para retornar um List<> com todos registros encontrados pelo nickname
@@ -20,5 +20,5 @@ OK 1 - Adicionar campo apelido na entidade Client pois pode facilitar a busca no
 ===============================================================
 BUGS:
 
- Endpoint create-order lança exception quando tenta cadastrar pedido em um nome e encontra 2 registros no banco de dados
-    com o mesmo nome.
+- Endpoint create-order lança exception quando tenta cadastrar pedido em um nome e encontra 2 registros no banco de dados
+com o mesmo nome.
