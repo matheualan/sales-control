@@ -1,0 +1,40 @@
+--INSERT INTO tb_clients (name, cpf, created_at) VALUES ('aaa', '111', CURRENT_TIMESTAMP);
+--INSERT INTO tb_clients (name, cpf) VALUES ('bbb', '222');
+--INSERT INTO tb_clients (name, cpf) VALUES ('ccc', '333');
+--INSERT INTO tb_clients (name, cpf) VALUES ('ddd', '444');
+--INSERT INTO tb_clients (name, cpf) VALUES ('eee', '555');
+
+--% significa uma sequencia de caracteres sendo letras ou numeros
+--SELECT id_client, name, cpf FROM tb_clients WHERE name LIKE 'M%';
+--SELECT name FROM tb_clients WHERE name LIKE '%o';
+--SELECT name FROM tb_clients WHERE name LIKE '%a%';
+
+--CREATE TABLE tb_clients (
+--    idClient INT AUTO_INCREMENT PRIMARY KEY,
+--    name VARCHAR(255) NOT NULL,
+--    cpf VARCHAR(255) UNIQUE,
+--    totalOrders INT NOT NULL,
+--    totalQuantity DOUBLE,
+--    totalPurchased DECIMAL(10, 2),
+--    createdAt DATETIME
+--) ENGINE=InnoDB;
+--
+--CREATE TABLE tb_orders (
+--    idOrder INT AUTO_INCREMENT PRIMARY KEY,
+--    clientId INT,
+--    quantity DOUBLE,
+--    price DECIMAL(10, 2),
+--    createdAt DATETIME,
+--    FOREIGN KEY (clientId) REFERENCES tb_clients(idClient)
+--) ENGINE=InnoDB;
+--
+--CREATE TABLE tb_addresses (
+--    idAddress INT AUTO_INCREMENT PRIMARY KEY,
+--    clientId INT,
+--    cep VARCHAR(255),
+--    logradouro VARCHAR(255),
+--    complemento VARCHAR(255),
+--    bairro VARCHAR(255),
+--    localidade VARCHAR(255),
+--    FOREIGN KEY (clientId) REFERENCES tb_clients(idClient)
+--) ENGINE=InnoDB;

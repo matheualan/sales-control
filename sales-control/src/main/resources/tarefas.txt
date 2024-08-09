@@ -1,0 +1,24 @@
+Regras de negócio:
+
+Sistema deve ficar pronto até dia 01/08 até às 23h
+Cadastrar Cliente (NOME, cpf)
+Cadastrar Cliente com Endereço
+Cadastrar Endereço e associar a um cliente
+Cadastrar Pedido e associar a Cliente
+
+===============================================================
+PARA IMPLEMENTAR:
+OK 1 - Adicionar campo apelido na entidade Client pois pode facilitar a busca no banco de dados
+    foi notado que será preciso localizar cliente por apelido para faciltar pois o nome posso nao lembrar depois
+2 - Criar endpoint para criar pedido por apelido
+3 - Mudar o retorno do método findByNickname para retornar um List<> com todos registros encontrados pelo nickname
+3.1 - Criar endpoint para buscar pelo primeiro nome e retornar uma lista com todos os registros com aquele nome
+4 - Criar nova entidade para trazer um relatório com os indices da aplicação/vendas/movimentação.
+5 - Ao criar um novo endereco buscando pelo CEP, associar diretamente a um client já existente na base de dados
+6 - Adc loggin-level no application.properties, verificar no projeto devdojo springboot essentials2
+
+===============================================================
+BUGS:
+
+ Endpoint create-order lança exception quando tenta cadastrar pedido em um nome e encontra 2 registros no banco de dados
+    com o mesmo nome.

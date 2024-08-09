@@ -1,0 +1,89 @@
+[
+  {
+    "name": "Matus",
+    "cpf": "12312312311"
+  },
+  {
+    "name": "Alen",
+    "cpf": "12312312312"
+  },
+  {
+    "name": "Miguelito",
+    "cpf": "12312312313"
+  },
+  {
+    "name": "Guilhermiano",
+    "cpf": "12312312314"
+  },
+  {
+    "name": "Elococo",
+    "cpf": "12312312315"
+  },
+
+  {
+    "name": "Arnold",
+    "cpf": "22312312310",
+    "orders": [
+      {
+        "quantity": 10,
+        "price": 110
+      }
+    ]
+  },
+  {
+    "name": "Joana",
+    "cpf": "22312312311",
+    "orders": [
+      {
+        "quantity": 5,
+        "price": 60
+      },
+      {
+        "quantity": 15,
+        "price": 150
+      }
+    ]
+  },
+//JSON ADDRESSES
+  {
+    "cep": "12312312",
+    "rua": "Rua estranha da silva",
+    "referencia": "Atrás na frente",
+    "bairro": "Cupurimum",
+    "estado": "GH"
+  },
+  {
+    "name": "Kaiq",
+    "cpf": "12312312316",
+    "addresses": [
+      {
+        "cep": "12312312",
+        "bairro": "aaaqqq",
+        "rua": "qqqaaa",
+        "referencia": "eeerrr",
+        "estado": "sa"
+      }
+    ]
+  },
+  {
+    "name": "Mayra",
+    "cpf": "12312312317",
+    "addresses": [
+      {
+        "cep": "12312312",
+        "bairro": "aaaqqq",
+        "rua": "qqqaaa",
+        "referencia": "eeerrr",
+        "estado": "sa"
+      },
+      {
+        "cep": "12312312",
+        "bairro": "aaaqqq",
+        "rua": "qqqaaa",
+        "referencia": "eeerrr",
+        "estado": "sa"
+      }
+    ]
+  }
+]
+
