@@ -30,4 +30,15 @@ public class ClientCreator {
                 .build();
     }
 
+    public static Client createSimpleClient() {
+        return Client.builder()
+                .idClient(2)
+                .name("Cliente")
+                .nickname("Apelido")
+                .cpf("CPF criado")
+                .totalQuantity(0.0)
+                .totalPurchased(BigDecimal.ZERO)
+                .build();
+    }
+
 }
