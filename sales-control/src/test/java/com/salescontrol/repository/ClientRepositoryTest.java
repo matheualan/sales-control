@@ -42,4 +42,18 @@ class ClientRepositoryTest {
         Assertions.assertThat(clients.get(1).getIdClient()).isEqualTo(2);
     }
 
+    @Test
+    @DisplayName("Return list of clients when successful")
+    void returnListOfClients_WhenSuccessful() {
+        List<Client> clientList = List.of(ClientCreator.createValidClient(),
+                ClientCreator.createValidClient2());
+
+        clientRepository.saveAll(clientList);
+
+        List<Client> listClients = clientRepository.findAll();
+
+        Assertions.assertThat(listClients).isNotNull().isNotEmpty();
+        Assertions.assertThat(listClients.get(0).getIdClient()).isEqualTo(1);
+    }
+
 }
