@@ -19,4 +19,15 @@ public class ClientCreator {
                 .build();
     }
 
+    public static Client createValidClient2() {
+        return Client.builder()
+                .idClient(2)
+                .name("Cliente criado")
+                .nickname("Apelido criado")
+                .cpf("CPF criado")
+                .totalQuantity(0.0)
+                .totalPurchased(BigDecimal.ZERO)
+                .build();
+    }
+
 }

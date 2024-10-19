@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @DataJpaTest
 @DisplayName("Tests for repository of client")
 class ClientRepositoryTest {
@@ -22,6 +25,21 @@ class ClientRepositoryTest {
 
         Assertions.assertThat(clientSaved).isNotNull();
         Assertions.assertThat(clientSaved.getName()).isEqualTo("Cliente criado com sucesso");
+    }
+
+    @Test
+    @DisplayName("Save a list clients when successful")
+    void saveListClient_WhenSuccessful() {
+        List<Client> clientList = new ArrayList<>();
+        clientList.add(ClientCreator.createValidClient());
+        clientList.add(ClientCreator.createValidClient2());
+
+        List<Client> clients = clientRepository.saveAll(clientList);
+
+        Assertions.assertThat(clients).isNotNull().isNotEmpty();
+        Assertions.assertThat(clients).hasSize(2);
+        Assertions.assertThat(clients.get(0).getIdClient()).isEqualTo(1);
+        Assertions.assertThat(clients.get(1).getIdClient()).isEqualTo(2);
     }
 
 }
