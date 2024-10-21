@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @DisplayName("Tests for repository of client")
@@ -62,12 +63,22 @@ class ClientRepositoryTest {
         List<Client> clientList = List.of(ClientCreator.createValidClient(),
                 ClientCreator.createValidClient2());
 
-        List<Client> listClients = clientRepository.saveAll(clientList);
+        clientRepository.saveAll(clientList);
 
-        Client client = clientRepository.findByName(listClients.get(0).getName()).get();
+        Client client = clientRepository.findByName(clientList.get(0).getName()).get();
 
         Assertions.assertThat(client).isNotNull();
-        Assertions.assertThat(client.getName()).isEqualTo(ClientCreator.createValidClient().getName());
+        Assertions.assertThat(client.getName()).isEqualTo(clientList.get(0).getName());
+    }
+
+    @Test
+    @DisplayName("")
+    void returnClientByNickname_WhenSuccessful() {
+        Client clientSaved = clientRepository.save(ClientCreator.createValidClient());
+        Client clientByNickname = clientRepository.findByNickname(clientSaved.getNickname()).get();
+
+        Assertions.assertThat(clientByNickname).isNotNull();
+        Assertions.assertThat(clientByNickname.getNickname()).isEqualTo(clientSaved.getNickname());
     }
 
 }
