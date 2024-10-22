@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +23,11 @@ class ClientRepositoryTest {
     @Test
     @DisplayName("Save client when successful")
     void saveClient_WhenSuccessful() {
-        Client clientSaved = clientRepository.save(ClientCreator.createValidClient());
+        Client validClient = ClientCreator.createValidClient();
+        Client clientSaved = clientRepository.save(validClient);
 
         Assertions.assertThat(clientSaved).isNotNull();
-        Assertions.assertThat(clientSaved.getName()).isEqualTo("Cliente criado com sucesso");
+        Assertions.assertThat(clientSaved.getName()).isEqualTo(validClient.getName());
     }
 
     @Test
@@ -39,8 +41,12 @@ class ClientRepositoryTest {
 
         Assertions.assertThat(clients).isNotNull().isNotEmpty();
         Assertions.assertThat(clients).hasSize(2);
-        Assertions.assertThat(clients.get(0).getIdClient()).isEqualTo(1);
-        Assertions.assertThat(clients.get(1).getIdClient()).isEqualTo(2);
+        Assertions.assertThat(clients.get(0).getIdClient()).isNotNull();
+        Assertions.assertThat(clients.get(0).getName()).isEqualTo(clientList.get(0).getName());
+        Assertions.assertThat(clients.get(1).getIdClient()).isNotNull();
+        Assertions.assertThat(clients.get(1).getName()).isEqualTo(clientList.get(1).getName());
+        Assertions.assertThat(clients).isNotNull().contains(clientList.get(0))
+                .contains(clientList.get(1));
     }
 
     @Test
@@ -53,8 +59,10 @@ class ClientRepositoryTest {
 
         List<Client> listClients = clientRepository.findAll();
 
-        Assertions.assertThat(listClients).isNotNull().isNotEmpty();
-        Assertions.assertThat(listClients.get(0).getIdClient()).isEqualTo(1);
+        Assertions.assertThat(listClients).isNotNull()
+                .isNotEmpty()
+                .contains(clientList.get(0))
+                .contains(clientList.get(1));
     }
 
     @Test
@@ -68,17 +76,55 @@ class ClientRepositoryTest {
         Client client = clientRepository.findByName(clientList.get(0).getName()).get();
 
         Assertions.assertThat(client).isNotNull();
+        Assertions.assertThat(client.getIdClient()).isNotNull();
         Assertions.assertThat(client.getName()).isEqualTo(clientList.get(0).getName());
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("Return client by nickname when successful")
     void returnClientByNickname_WhenSuccessful() {
         Client clientSaved = clientRepository.save(ClientCreator.createValidClient());
         Client clientByNickname = clientRepository.findByNickname(clientSaved.getNickname()).get();
 
         Assertions.assertThat(clientByNickname).isNotNull();
+        Assertions.assertThat(clientByNickname.getIdClient()).isNotNull();
         Assertions.assertThat(clientByNickname.getNickname()).isEqualTo(clientSaved.getNickname());
+    }
+
+    @Test
+    @DisplayName("Return client by CPF when successful")
+    void returnClientByCPF_WhenSuccessful() {
+        Client clientSaved = clientRepository.save(ClientCreator.createValidClient());
+        Client clientByCPF = clientRepository.findByCpf(clientSaved.getCpf()).get();
+
+        Assertions.assertThat(clientByCPF).isNotNull();
+        Assertions.assertThat(clientByCPF.getCpf()).isEqualTo(clientSaved.getCpf());
+    }
+
+    @DirtiesContext
+    @Test
+    @DisplayName("Delete client by ID when successful")
+    void deleteClientByID_WhenSuccessful() {
+        Client clientSaved = clientRepository.save(ClientCreator.createValidClient());
+        clientRepository.delete(clientSaved);
+        Optional<Client> responseDelete = clientRepository.findById(clientSaved.getIdClient());
+
+        Assertions.assertThat(responseDelete.isEmpty()).isTrue();
+    }
+
+    @DirtiesContext
+    @Test
+    @DisplayName("Update client when successful")
+    void updateClient_WhenSuccessful() {
+        Client clientSaved = clientRepository.save(ClientCreator.createValidClient());
+
+        clientSaved.setName("Astrogildo");
+        Client clientSavedao = clientRepository.save(clientSaved);
+
+        Assertions.assertThat(clientSaved).isNotNull();
+        Assertions.assertThat(clientSaved.getName()).isEqualTo("Astrogildo");
+        Assertions.assertThat(clientSaved.getName()).isEqualTo(clientSavedao.getName());
+
     }
 
 }
