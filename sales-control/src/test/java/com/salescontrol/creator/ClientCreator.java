@@ -1,11 +1,10 @@
 package com.salescontrol.creator;
 
+import com.salescontrol.dto.client.ClientPostDTO;
 import com.salescontrol.model.Client;
-import lombok.Data;
 
 import java.math.BigDecimal;
 
-@Data
 public class ClientCreator {
 
     public static Client createValidClient() {
@@ -30,7 +29,7 @@ public class ClientCreator {
                 .build();
     }
 
-    public static Client createSimpleClient() {
+    public static Client createValidClient3() {
         return Client.builder()
                 .idClient(3)
                 .name("Cliente 3")
@@ -38,6 +37,14 @@ public class ClientCreator {
                 .cpf("CPF 3")
                 .totalQuantity(0.0)
                 .totalPurchased(BigDecimal.ZERO)
+                .build();
+    }
+
+    public static ClientPostDTO createClientPostDTO() {
+        return ClientPostDTO.builder()
+                .name("Cliente DTO 1")
+                .nickname("Apelido DTO 1")
+                .cpf("CPF DTO 1")
                 .build();
     }
 

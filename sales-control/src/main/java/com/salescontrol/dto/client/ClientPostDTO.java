@@ -3,11 +3,13 @@ package com.salescontrol.dto.client;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
+@Builder
 @JsonIgnoreProperties(value = {"totalOrders", "totalQuantity", "totalPurchased"})
 public class ClientPostDTO {
 
