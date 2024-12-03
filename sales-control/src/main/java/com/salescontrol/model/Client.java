@@ -34,10 +34,12 @@ public class Client {
     @Column(unique = true)
     private String cpf;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+//    era persist
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+//    era persist
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private List<Address> addresses = new ArrayList<>();
 

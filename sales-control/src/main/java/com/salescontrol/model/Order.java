@@ -20,7 +20,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOrder;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    se der algum erro mudar o cascade para ALL
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", referencedColumnName = "idClient")
     private Client client;
 

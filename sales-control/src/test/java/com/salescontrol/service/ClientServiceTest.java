@@ -45,9 +45,13 @@ class ClientServiceTest {
 
         BDDMockito.when(clientRepositoryMock.findByCpf(ArgumentMatchers.anyString()))
                 .thenReturn(Optional.of(ClientCreator.createValidClient()));
+
+        BDDMockito.when(clientRepositoryMock.findById(ArgumentMatchers.anyInt()))
+                .thenReturn(Optional.of(ClientCreator.createValidClient()));
+
+//        BDDMockito.doNothing().when(clientRepositoryMock).delete(ArgumentMatchers.any(Client.class));
     }
 
-//    @DirtiesContext
     @Test
     @DisplayName("When successful must save a client")
     void saveClient_WhenSuccessful() {
@@ -112,6 +116,13 @@ class ClientServiceTest {
 
         Assertions.assertThat(responseClientByCPF).isNotNull();
         Assertions.assertThat(responseClientByCPF.getCpf()).isEqualTo(validClient.getCpf());
+    }
+
+    @Test
+    @DisplayName("When succesful must delete client by Id")
+    void deleteClientById_WhenSuccesful() {
+        Assertions.assertThatCode(() -> clientService.deleteClient(1))
+                .doesNotThrowAnyException();
     }
 
 }

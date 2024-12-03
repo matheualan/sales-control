@@ -124,7 +124,6 @@ class ClientRepositoryTest {
         Assertions.assertThat(clientSaved).isNotNull();
         Assertions.assertThat(clientSaved.getName()).isEqualTo("Astrogildo");
         Assertions.assertThat(clientSaved.getName()).isEqualTo(clientSavedao.getName());
-
     }
 
 }
