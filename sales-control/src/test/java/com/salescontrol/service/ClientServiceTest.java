@@ -4,6 +4,7 @@ import com.salescontrol.creator.ClientCreator;
 import com.salescontrol.dto.client.ClientGetDTO;
 import com.salescontrol.dto.client.ClientPostDTO;
 import com.salescontrol.model.Client;
+import com.salescontrol.model.Order;
 import com.salescontrol.repository.ClientRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -119,10 +122,51 @@ class ClientServiceTest {
     }
 
     @Test
-    @DisplayName("When succesful must delete client by Id")
+    @DisplayName("Delete client by id when succesful")
     void deleteClientById_WhenSuccesful() {
         Assertions.assertThatCode(() -> clientService.deleteClient(1))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("Updated client by id when successful")
+    void updatedClientById_WhenSuccessful() {
+        List<Order> orders = new ArrayList<>();
+
+        Client client = new Client(1,
+                "Matheus",
+                "Mths",
+                "12312312312",
+                orders,
+                null,
+                null,
+                null,
+                null);
+
+        Order order1 = new Order(1, client, 5.0, new BigDecimal("60.0"), LocalDateTime.now());
+        Order order2 = new Order(2, client, 10.0, new BigDecimal("130.0"), LocalDateTime.now());
+        orders.add(order1);
+        orders.add(order2);
+
+        client.setTotalOrders(2);
+        client.setTotalQuantity(15.0);
+        client.setTotalPurchased(new BigDecimal("190.0"));
+
+        Assertions.assertThat(client.getIdClient()).isEqualTo(1);
+        Assertions.assertThat(client.getOrders().get(0).getClient().getName()).isEqualTo(client.getName());
+
+        Assertions.assertThat(client.getOrders().get(0).getQuantity()).isEqualTo(5.0);
+
+        orders.get(0).setQuantity(4.0);
+        Assertions.assertThat(client.getOrders().get(0).getQuantity()).isEqualTo(4.0);
+        Assertions.assertThat(client.getName()).isEqualTo("Matheus");
+        Assertions.assertThat(client.getOrders().get(0).getClient().getName()).isEqualTo("Matheus");
+
+        client.setName("Alan");
+        Assertions.assertThat(client.getName()).isEqualTo("Alan");
+        Assertions.assertThat(client.getTotalOrders()).isEqualTo(2);
+        Assertions.assertThat(client.getTotalQuantity()).isEqualTo(15.0);
+        Assertions.assertThat(client.getTotalPurchased()).isEqualTo("190.0");
     }
 
 }
