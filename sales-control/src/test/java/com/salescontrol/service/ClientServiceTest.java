@@ -58,7 +58,7 @@ class ClientServiceTest {
     @Test
     @DisplayName("When successful must save a client")
     void saveClient_WhenSuccessful() {
-        ClientPostDTO clientPostDTOMock = ClientCreator.createClientPostDTO();
+        ClientPostDTO clientPostDTOMock = ClientCreator.clientPostDTO();
         ClientPostDTO clientPostDTO = clientService.saveClient(clientPostDTOMock);
 
         Assertions.assertThat(clientPostDTO.getName()).isNotNull().isEqualTo(clientPostDTOMock.getName());
@@ -68,8 +68,8 @@ class ClientServiceTest {
     @DisplayName("When successful must save all clients")
     void saveAllClients_WhenSuccessful() {
         List<ClientPostDTO> multipleClients = new ArrayList<>();
-        ClientPostDTO clientPostDTOMock = ClientCreator.createClientPostDTO();
-        ClientPostDTO clientPostDTOMock2 = ClientCreator.createClientPostDTO();
+        ClientPostDTO clientPostDTOMock = ClientCreator.clientPostDTO();
+        ClientPostDTO clientPostDTOMock2 = ClientCreator.clientPostDTO();
         multipleClients.add(clientPostDTOMock);
         multipleClients.add(clientPostDTOMock2);
 

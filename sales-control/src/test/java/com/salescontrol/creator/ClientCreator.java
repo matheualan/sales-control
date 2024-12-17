@@ -1,11 +1,13 @@
 package com.salescontrol.creator;
 
+import com.salescontrol.dto.client.ClientGetDTO;
 import com.salescontrol.dto.client.ClientPostDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
 import com.salescontrol.model.Client;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class ClientCreator {
 
@@ -31,7 +33,7 @@ public class ClientCreator {
                 .build();
     }
 
-    public static ClientPostDTO createClientPostDTO() {
+    public static ClientPostDTO clientPostDTO() {
         return ClientPostDTO.builder()
                 .name("Cliente DTO 1")
                 .nickname("Apelido DTO 1")
@@ -39,7 +41,7 @@ public class ClientCreator {
                 .build();
     }
 
-    public static ClientPostDTO createClientPostDTO2() {
+    public static ClientPostDTO clientPostDTO2() {
         return ClientPostDTO.builder()
                 .name("Cliente DTO 2")
                 .nickname("Apelido DTO 2")
@@ -47,7 +49,7 @@ public class ClientCreator {
                 .build();
     }
 
-    public static ClientForAddressPostDTO createClientWithAddress() {
+    public static ClientForAddressPostDTO clientForAddressPostDTO() {
         return ClientForAddressPostDTO.builder()
                 .name("Name client with address")
                 .nickname("Nickname client with address")
@@ -55,11 +57,20 @@ public class ClientCreator {
                 .build();
     }
 
-    public static ClientForAddressGetDTO getClientWithAddress() {
+    public static ClientForAddressGetDTO clientForAddressGetDTO() {
         return ClientForAddressGetDTO.builder()
                 .name("Name client with address")
                 .nickname("Nickname client with address")
                 .cpf("CPF client with address")
+                .build();
+    }
+
+    public static ClientGetDTO clientGetDTO() {
+        return ClientGetDTO.builder()
+                .name("Name client get DTO")
+                .nickname("Nickname client get DTO")
+                .cpf("CPF client get DTO")
+                .createdAt(LocalDateTime.now())
                 .build();
     }
 

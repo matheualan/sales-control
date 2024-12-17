@@ -2,9 +2,11 @@ package com.salescontrol.controller;
 
 import com.salescontrol.controller.client.ClientController;
 import com.salescontrol.creator.ClientCreator;
+import com.salescontrol.dto.client.ClientGetDTO;
 import com.salescontrol.dto.client.ClientPostDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
+import com.salescontrol.model.Client;
 import com.salescontrol.service.ClientService;
 import com.salescontrol.util.DateUtil;
 import org.assertj.core.api.Assertions;
@@ -41,22 +43,26 @@ class ClientControllerTest {
                 .thenReturn(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").format(LocalDateTime.now()));
 
         BDDMockito.when(clientServiceMock.saveClient(ArgumentMatchers.any(ClientPostDTO.class)))
-                .thenReturn(ClientCreator.createClientPostDTO());
+                .thenReturn(ClientCreator.clientPostDTO());
 
         BDDMockito.when(clientServiceMock.saveMultipleClients(ArgumentMatchers.any()))
-                .thenReturn(List.of(ClientCreator.createClientPostDTO(), ClientCreator.createClientPostDTO2()));
+                .thenReturn(List.of(ClientCreator.clientPostDTO(), ClientCreator.clientPostDTO2()));
 
         BDDMockito.when(clientServiceMock.saveClientWithAddress(ArgumentMatchers.any()))
-                .thenReturn(ClientCreator.createClientWithAddress());
+                .thenReturn(ClientCreator.clientForAddressPostDTO());
 
         BDDMockito.when(clientServiceMock.listClientsWithAddresses())
-                .thenReturn(List.of(ClientCreator.getClientWithAddress()));
+                .thenReturn(List.of(ClientCreator.clientForAddressGetDTO()));
+
+        BDDMockito.when(clientServiceMock.listClients()).thenReturn(List.of(ClientCreator.createValidClient()));
+
+        BDDMockito.when(clientServiceMock.listClientsDTO()).thenReturn(List.of(ClientCreator.clientGetDTO()));
     }
 
     @Test
     @DisplayName("Must saved client when successful")
     void savedClient_WhenSuccessful() {
-        ClientPostDTO clientPostDTO = ClientCreator.createClientPostDTO();
+        ClientPostDTO clientPostDTO = ClientCreator.clientPostDTO();
         ClientPostDTO responseOfSaveClient = clientController.saveClient(clientPostDTO).getBody();
 
         Assertions.assertThat(responseOfSaveClient).isNotNull();
@@ -67,7 +73,7 @@ class ClientControllerTest {
     @DisplayName("Must saved multiples clients when successful")
     void savedMultiplesClients_WhenSuccessful() {
         List<ClientPostDTO> listClients = new ArrayList<>();
-        ClientPostDTO client = ClientCreator.createClientPostDTO();
+        ClientPostDTO client = ClientCreator.clientPostDTO();
 
         List<ClientPostDTO> responseSaveMultipleClients = clientController.saveMultipleClients(listClients).getBody();
 
@@ -78,7 +84,7 @@ class ClientControllerTest {
     @Test
     @DisplayName("Must saved client with address when successful")
     void savedClientWithAddress_WhenSuccessful() {
-        ClientForAddressPostDTO clientWithAddress = ClientCreator.createClientWithAddress();
+        ClientForAddressPostDTO clientWithAddress = ClientCreator.clientForAddressPostDTO();
 
         ClientForAddressPostDTO responseSavedClientWithAddress = clientController.saveClientWithAddress(clientWithAddress).getBody();
 
@@ -93,7 +99,25 @@ class ClientControllerTest {
 
         Assertions.assertThat(responseListClientsWithAddresses).isNotNull().isNotEmpty();
         Assertions.assertThat(responseListClientsWithAddresses.get(0).getName())
-                .isEqualTo(ClientCreator.getClientWithAddress().getName());
+                .isEqualTo(ClientCreator.clientForAddressGetDTO().getName());
+    }
+
+    @Test
+    @DisplayName("Returns a list of clients when successful")
+    void returnListOfClients_WhenSuccessful() {
+        List<Client> responseListClients = clientController.listClients().getBody();
+
+        Assertions.assertThat(responseListClients).isNotNull().isNotEmpty();
+        Assertions.assertThat(responseListClients.get(0).getName()).isEqualTo(ClientCreator.createValidClient().getName());
+    }
+
+    @Test
+    @DisplayName("Returns a list of clients DTO when successful")
+    void returnListClientsDTO_WhenSuccessful() {
+        List<ClientGetDTO> responseListClientsDTO = clientController.listClientsDTO().getBody();
+
+        Assertions.assertThat(responseListClientsDTO).isNotNull().isNotEmpty();
+        Assertions.assertThat(responseListClientsDTO.get(0).getName()).isEqualTo(ClientCreator.clientGetDTO().getName());
     }
 
 }
