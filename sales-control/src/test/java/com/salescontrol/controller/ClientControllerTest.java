@@ -3,10 +3,10 @@ package com.salescontrol.controller;
 import com.salescontrol.controller.client.ClientController;
 import com.salescontrol.creator.ClientCreator;
 import com.salescontrol.dto.client.ClientPostDTO;
-import com.salescontrol.model.Client;
+import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
+import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
 import com.salescontrol.service.ClientService;
 import com.salescontrol.util.DateUtil;
-import org.assertj.core.api.Assert;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +44,13 @@ class ClientControllerTest {
                 .thenReturn(ClientCreator.createClientPostDTO());
 
         BDDMockito.when(clientServiceMock.saveMultipleClients(ArgumentMatchers.any()))
-                .thenReturn(List.of(ClientCreator.createClientPostDTO(), ClientCreator.createClientPostDTO()));
+                .thenReturn(List.of(ClientCreator.createClientPostDTO(), ClientCreator.createClientPostDTO2()));
+
+        BDDMockito.when(clientServiceMock.saveClientWithAddress(ArgumentMatchers.any()))
+                .thenReturn(ClientCreator.createClientWithAddress());
+
+        BDDMockito.when(clientServiceMock.listClientsWithAddresses())
+                .thenReturn(List.of(ClientCreator.getClientWithAddress()));
     }
 
     @Test
@@ -67,6 +73,27 @@ class ClientControllerTest {
 
         Assertions.assertThat(responseSaveMultipleClients).isNotNull().isNotEmpty();
         Assertions.assertThat(responseSaveMultipleClients.get(0).getName()).isEqualTo(client.getName());
+    }
+
+    @Test
+    @DisplayName("Must saved client with address when successful")
+    void savedClientWithAddress_WhenSuccessful() {
+        ClientForAddressPostDTO clientWithAddress = ClientCreator.createClientWithAddress();
+
+        ClientForAddressPostDTO responseSavedClientWithAddress = clientController.saveClientWithAddress(clientWithAddress).getBody();
+
+        Assertions.assertThat(responseSavedClientWithAddress).isNotNull();
+        Assertions.assertThat(responseSavedClientWithAddress.getName()).isEqualTo(clientWithAddress.getName()).isNotEmpty();
+    }
+
+    @Test
+    @DisplayName("Returns a list of clients with addresses when successful")
+    void returnsListOfClientsWithAddresses_WhenSuccessful() {
+        List<ClientForAddressGetDTO> responseListClientsWithAddresses = clientController.listClientsWithAddresses().getBody();
+
+        Assertions.assertThat(responseListClientsWithAddresses).isNotNull().isNotEmpty();
+        Assertions.assertThat(responseListClientsWithAddresses.get(0).getName())
+                .isEqualTo(ClientCreator.getClientWithAddress().getName());
     }
 
 }

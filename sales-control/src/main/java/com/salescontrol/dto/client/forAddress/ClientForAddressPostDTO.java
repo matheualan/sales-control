@@ -2,12 +2,14 @@ package com.salescontrol.dto.client.forAddress;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.salescontrol.dto.address.AddressPostDTO;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Data
+@Builder
 @JsonIgnoreProperties(value = {"totalOrders", "totalQuantity", "totalPurchased"})
 public class ClientForAddressPostDTO {
 

@@ -1,6 +1,8 @@
 package com.salescontrol.creator;
 
 import com.salescontrol.dto.client.ClientPostDTO;
+import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
+import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
 import com.salescontrol.model.Client;
 
 import java.math.BigDecimal;
@@ -29,17 +31,6 @@ public class ClientCreator {
                 .build();
     }
 
-//    public static Client createValidClient3() {
-//        return Client.builder()
-//                .idClient(3)
-//                .name("Cliente 3")
-//                .nickname("Apelido 3")
-//                .cpf("CPF 3")
-//                .totalQuantity(0.0)
-//                .totalPurchased(BigDecimal.ZERO)
-//                .build();
-//    }
-
     public static ClientPostDTO createClientPostDTO() {
         return ClientPostDTO.builder()
                 .name("Cliente DTO 1")
@@ -53,6 +44,22 @@ public class ClientCreator {
                 .name("Cliente DTO 2")
                 .nickname("Apelido DTO 2")
                 .cpf("CPF DTO 2")
+                .build();
+    }
+
+    public static ClientForAddressPostDTO createClientWithAddress() {
+        return ClientForAddressPostDTO.builder()
+                .name("Name client with address")
+                .nickname("Nickname client with address")
+                .cpf("CPF client with address")
+                .build();
+    }
+
+    public static ClientForAddressGetDTO getClientWithAddress() {
+        return ClientForAddressGetDTO.builder()
+                .name("Name client with address")
+                .nickname("Nickname client with address")
+                .cpf("CPF client with address")
                 .build();
     }
 
