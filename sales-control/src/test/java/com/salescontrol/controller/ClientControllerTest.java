@@ -18,6 +18,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
@@ -57,6 +58,16 @@ class ClientControllerTest {
         BDDMockito.when(clientServiceMock.listClients()).thenReturn(List.of(ClientCreator.createValidClient()));
 
         BDDMockito.when(clientServiceMock.listClientsDTO()).thenReturn(List.of(ClientCreator.clientGetDTO()));
+
+        BDDMockito.when(clientServiceMock.findByName(ArgumentMatchers.anyString()))
+                .thenReturn(ClientCreator.clientGetDTO());
+
+        BDDMockito.when(clientServiceMock.findByNickname(ArgumentMatchers.anyString()))
+                .thenReturn(ClientCreator.clientGetDTO());
+
+        BDDMockito.when(clientServiceMock.findByCpf(ArgumentMatchers.anyString()))
+                .thenReturn(ClientCreator.clientGetDTO());
+
     }
 
     @Test
@@ -119,5 +130,35 @@ class ClientControllerTest {
         Assertions.assertThat(responseListClientsDTO).isNotNull().isNotEmpty();
         Assertions.assertThat(responseListClientsDTO.get(0).getName()).isEqualTo(ClientCreator.clientGetDTO().getName());
     }
+
+    @Test
+    @DisplayName("Must find client by name when successful")
+    void returnClientByName_WhenSuccessful() {
+        ClientGetDTO responseFindClientByName = clientController.findClientByName(ArgumentMatchers.anyString()).getBody();
+
+        Assertions.assertThat(responseFindClientByName).isNotNull();
+        Assertions.assertThat(responseFindClientByName.getName()).isEqualTo(ClientCreator.clientGetDTO().getName());
+    }
+
+    @Test
+    @DisplayName("Must find client by nickname when successful")
+    void returnClientByNickName_WhenSuccessful() {
+        ClientGetDTO responseClientByNickname = clientController.findByNickname(ArgumentMatchers.anyString()).getBody();
+
+        Assertions.assertThat(responseClientByNickname).isNotNull();
+        Assertions.assertThat(responseClientByNickname.getNickname()).isEqualTo(ClientCreator.clientGetDTO().getNickname());
+    }
+
+    @Test
+    @DisplayName("Must find client by cpf when successful")
+    void returnClientByCPF_WhenSuccessful() {
+        ClientGetDTO responseClientByCpf = clientController.findClientByCpf(ArgumentMatchers.anyString()).getBody();
+
+        Assertions.assertThat(responseClientByCpf).isNotNull();
+        Assertions.assertThat(responseClientByCpf.getCpf()).isEqualTo(ClientCreator.clientGetDTO().getCpf());
+    }
+
+    @Test
+    @DisplayName(Must )
 
 }

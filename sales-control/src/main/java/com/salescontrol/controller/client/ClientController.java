@@ -89,7 +89,7 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping(value = "/uptated-client/{id}")
+    @PutMapping(value = "/updated-client/{id}")
     public ResponseEntity<Void> updateClient(@PathVariable Integer id, @RequestBody ClientPostDTO clientPostDTO) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" PUT updateClient()"));
         clientService.updatedClient(id, clientPostDTO);
