@@ -10,7 +10,6 @@ import com.salescontrol.model.Client;
 import com.salescontrol.service.ClientService;
 import com.salescontrol.util.DateUtil;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
