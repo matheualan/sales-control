@@ -10,6 +10,7 @@ import com.salescontrol.model.Client;
 import com.salescontrol.service.ClientService;
 import com.salescontrol.util.DateUtil;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,8 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
@@ -68,6 +70,10 @@ class ClientControllerTest {
         BDDMockito.when(clientServiceMock.findByCpf(ArgumentMatchers.anyString()))
                 .thenReturn(ClientCreator.clientGetDTO());
 
+        BDDMockito.doNothing().when(clientServiceMock).deleteClient(ArgumentMatchers.anyInt());
+
+        BDDMockito.doNothing().when(clientServiceMock)
+                .updatedClient(ArgumentMatchers.anyInt(), ArgumentMatchers.any(ClientPostDTO.class));
     }
 
     @Test
@@ -159,6 +165,36 @@ class ClientControllerTest {
     }
 
     @Test
-    @DisplayName(Must )
+    @DisplayName("Must deleted client by id when successful")
+    void deleteClientById_WhenSuccessful() {
+        Assertions.assertThatCode(() -> clientController.deleteClientById(1)).doesNotThrowAnyException();
+
+        ClientPostDTO body = clientController.saveClient(ClientCreator.clientPostDTO()).getBody();
+
+        ResponseEntity<Void> voidResponseEntity = clientController.deleteClientById(1);
+
+        Assertions.assertThat(voidResponseEntity).isNotNull();
+        Assertions.assertThat(voidResponseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+
+    @Test
+    @DisplayName("Must updated client by id when successful")
+    void updatedClientById_WhenSuccessful() {
+        Assertions.assertThatCode(() -> clientController
+                        .updateClient(1, ClientCreator.clientPostDTO())
+                ).doesNotThrowAnyException();
+
+        ClientPostDTO savedClient = clientController.saveClient(ClientCreator.clientPostDTO()).getBody();
+
+        assert savedClient != null;
+        savedClient.setName("Nome Alterado");
+
+        ResponseEntity<Void> voidResponseEntity = clientController.updateClient(1, savedClient);
+
+        Assertions.assertThat(savedClient.getName()).isEqualTo("Nome Alterado");
+
+        Assertions.assertThat(voidResponseEntity).isNotNull();
+        Assertions.assertThat(voidResponseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
 
 }
