@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @DataJpaTest
 @DisplayName("Tests for repository of client")
+//@ActiveProfiles("test") //Anotacao serve para indicar para usar o arquivo properties de test que deve estar na pasta resource dentro da pasta test
 class ClientRepositoryTest {
 
     @Autowired
@@ -103,8 +104,8 @@ class ClientRepositoryTest {
 
     @DirtiesContext
     @Test
-    @DisplayName("Delete client by ID when successful")
-    void deleteClientByID_WhenSuccessful() {
+    @DisplayName("Delete client when successful")
+    void deleteClient_WhenSuccessful() {
         Client clientSaved = clientRepository.save(ClientCreator.createValidClient());
         clientRepository.delete(clientSaved);
         Optional<Client> responseDelete = clientRepository.findById(clientSaved.getIdClient());
