@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @DataJpaTest
 @DisplayName("Tests for repository of client")
-//@ActiveProfiles("test") //Anotacao serve para indicar para usar o arquivo properties de test que deve estar na pasta resource dentro da pasta test
+//@ActiveProfiles("test") //Anotacao serve para indicar para usar o arquivo app.properties de test que deve estar na pasta resource dentro da pasta test
 class ClientRepositoryTest {
 
     @Autowired
