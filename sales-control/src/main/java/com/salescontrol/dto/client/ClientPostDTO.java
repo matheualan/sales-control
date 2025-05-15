@@ -9,7 +9,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-@Builder //Comentar essa anotacao para poder salvar novos clientes na API - Descomentar para realizar os testes
+//@Builder //Comentar essa anotacao para poder salvar novos clientes na API - Descomentar para realizar os testes
 @JsonIgnoreProperties(value = {"totalOrders", "totalQuantity", "totalPurchased"})
 public class ClientPostDTO {
 

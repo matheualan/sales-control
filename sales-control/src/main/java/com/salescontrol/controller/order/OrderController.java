@@ -35,4 +35,11 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.findAllOrders());
     }
 
+    @DeleteMapping(value = "/delete-order-byId/{id}")
+    public ResponseEntity<Void> deleteOrderById(@PathVariable Integer id) {
+        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" DELETE deleteOrderById()"));
+        orderService.deleteOrderById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }

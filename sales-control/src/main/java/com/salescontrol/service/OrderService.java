@@ -41,4 +41,9 @@ public class OrderService {
         return OrderMapper.INSTANCE.toOrderGet(order);
     }
 
+    public void deleteOrderById(Integer id) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found"));
+        orderRepository.delete(order);
+    }
+
 }
