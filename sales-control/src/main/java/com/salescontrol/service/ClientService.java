@@ -13,10 +13,12 @@ import com.salescontrol.model.Order;
 import com.salescontrol.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -70,6 +72,11 @@ public class ClientService {
         return ClientMapper.INSTANCE.toClientGet(client);
     }
 
+    public Client findById(Integer id) {
+        return clientRepository.findById(id).orElseThrow(
+                () -> new ClientNotFoundException("Cliente com o ID " + id + " não encontrado."));
+    }
+
     public void deleteClient(Integer id) {
         Client client = clientRepository.findById(id).orElseThrow(
                 () -> new ClientNotFoundException("Cliente não encontrado."));
@@ -82,6 +89,13 @@ public class ClientService {
 
         BeanUtils.copyProperties(clientPostDTO, client);
         clientRepository.save(client);
+    }
+
+    public Optional<ClientGetDTO> updateClient(Integer id, ClientPostDTO clientPostDTO) {
+        var clientById = findById(id);
+        BeanUtils.copyProperties(clientPostDTO, clientById);
+        clientRepository.save(clientById);
+        return Optional.of(ClientMapper.INSTANCE.toClientGet(clientById));
     }
 
 //    LÓGICA DE CLIENT COM ORDER
@@ -121,4 +135,5 @@ public class ClientService {
         }
         return listClientsWithAddresses;
     }
+
 }
