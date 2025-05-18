@@ -13,9 +13,12 @@ import com.salescontrol.model.Order;
 import com.salescontrol.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -91,14 +94,33 @@ public class ClientService {
         clientRepository.save(client);
     }
 
+//    public ClientGetDTO updateClient(Integer id, ClientPostDTO clientPostDTO) {
+//        return null;
+//    }
+
     public Optional<ClientGetDTO> updateClient(Integer id, ClientPostDTO clientPostDTO) {
         var clientById = findById(id);
-        BeanUtils.copyProperties(clientPostDTO, clientById);
+        copyNonNullProperties(clientPostDTO, clientById);
         clientRepository.save(clientById);
         return Optional.of(ClientMapper.INSTANCE.toClientGet(clientById));
     }
 
-//    LÓGICA DE CLIENT COM ORDER
+    public void copyNonNullProperties(ClientPostDTO clientSource, Client clientTarget) {
+        BeanWrapperImpl srcWrapper = new BeanWrapperImpl(clientSource);
+        BeanWrapperImpl trgWrapper = new BeanWrapperImpl(clientTarget);
+
+        for (PropertyDescriptor propertyDescriptor : srcWrapper.getPropertyDescriptors()) {
+            String propertyName = propertyDescriptor.getName();
+
+            if (srcWrapper.getPropertyValue(propertyName) != null &&
+            trgWrapper.isWritableProperty(propertyName)) {
+                Object propertyValue = srcWrapper.getPropertyValue(propertyName);
+                trgWrapper.setPropertyValue(propertyName, propertyValue);
+            }
+        }
+    }
+
+    //    LÓGICA DE CLIENT COM ORDER
     public ClientWithOrderPostDTO saveClientWithOrder(ClientWithOrderPostDTO clientWithOrderPostDTO) {
         Client client = ClientMapper.INSTANCE.toClient(clientWithOrderPostDTO);
 
