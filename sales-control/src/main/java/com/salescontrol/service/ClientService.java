@@ -8,6 +8,7 @@ import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
 import com.salescontrol.exception.ClientNotFoundException;
 import com.salescontrol.mapper.ClientMapper;
+import com.salescontrol.mapper.ClientMapperInterface;
 import com.salescontrol.model.Client;
 import com.salescontrol.model.Order;
 import com.salescontrol.repository.ClientRepository;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
@@ -94,31 +96,37 @@ public class ClientService {
         clientRepository.save(client);
     }
 
-//    public ClientGetDTO updateClient(Integer id, ClientPostDTO clientPostDTO) {
-//        return null;
-//    }
+    @Autowired
+    public ClientMapperInterface clientMapperInterface;
 
     public Optional<ClientGetDTO> updateClient(Integer id, ClientPostDTO clientPostDTO) {
-        var clientById = findById(id);
-        copyNonNullProperties(clientPostDTO, clientById);
-        clientRepository.save(clientById);
-        return Optional.of(ClientMapper.INSTANCE.toClientGet(clientById));
+        Client client = findById(id);
+        clientMapperInterface.updateClientFromDto(clientPostDTO, client);
+        clientRepository.save(client);
+        return Optional.of(ClientMapper.INSTANCE.toClientGet(client));
     }
 
-    public void copyNonNullProperties(ClientPostDTO clientSource, Client clientTarget) {
-        BeanWrapperImpl srcWrapper = new BeanWrapperImpl(clientSource);
-        BeanWrapperImpl trgWrapper = new BeanWrapperImpl(clientTarget);
-
-        for (PropertyDescriptor propertyDescriptor : srcWrapper.getPropertyDescriptors()) {
-            String propertyName = propertyDescriptor.getName();
-
-            if (srcWrapper.getPropertyValue(propertyName) != null &&
-            trgWrapper.isWritableProperty(propertyName)) {
-                Object propertyValue = srcWrapper.getPropertyValue(propertyName);
-                trgWrapper.setPropertyValue(propertyName, propertyValue);
-            }
-        }
-    }
+//    public Optional<ClientGetDTO> updateClient(Integer id, ClientPostDTO clientPostDTO) {
+//        var clientById = findById(id);
+//        copyNonNullProperties(clientPostDTO, clientById);
+//        clientRepository.save(clientById);
+//        return Optional.of(ClientMapper.INSTANCE.toClientGet(clientById));
+//    }
+//
+//    public void copyNonNullProperties(ClientPostDTO clientSource, Client clientTarget) {
+//        BeanWrapperImpl srcWrapper = new BeanWrapperImpl(clientSource);
+//        BeanWrapperImpl trgWrapper = new BeanWrapperImpl(clientTarget);
+//
+//        for (PropertyDescriptor propertyDescriptor : srcWrapper.getPropertyDescriptors()) {
+//            String propertyName = propertyDescriptor.getName();
+//
+//            if (srcWrapper.getPropertyValue(propertyName) != null &&
+//            trgWrapper.isWritableProperty(propertyName)) {
+//                Object propertyValue = srcWrapper.getPropertyValue(propertyName);
+//                trgWrapper.setPropertyValue(propertyName, propertyValue);
+//            }
+//        }
+//    }
 
     //    LÓGICA DE CLIENT COM ORDER
     public ClientWithOrderPostDTO saveClientWithOrder(ClientWithOrderPostDTO clientWithOrderPostDTO) {
