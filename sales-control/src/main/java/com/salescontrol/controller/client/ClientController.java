@@ -2,17 +2,17 @@ package com.salescontrol.controller.client;
 
 import com.salescontrol.dto.client.ClientGetDTO;
 import com.salescontrol.dto.client.ClientPostDTO;
+import com.salescontrol.dto.client.ClientPutDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
-import com.salescontrol.mapper.ClientMapper;
 import com.salescontrol.model.Client;
 import com.salescontrol.service.ClientService;
 import com.salescontrol.util.DateUtil;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -94,6 +94,7 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @Hidden
     @PutMapping(value = "/updated-client/{id}")
     public ResponseEntity<Void> updatedClient(@PathVariable Integer id, @RequestBody ClientPostDTO clientPostDTO) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" PUT updateClient()"));
@@ -102,9 +103,9 @@ public class ClientController {
     }
 
     @PatchMapping(value = "/update-client/{id}")
-    public ResponseEntity<Optional<ClientGetDTO>> updateClient(@PathVariable Integer id, @RequestBody ClientPostDTO clientPostDTO) {
+    public ResponseEntity<Optional<ClientGetDTO>> updateClient(@PathVariable Integer id, @RequestBody ClientPutDTO clientPutDTO) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" PATCH updateClient()"));
-        return ResponseEntity.status(HttpStatus.OK).body(clientService.updateClient(id, clientPostDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.updateClient(id, clientPutDTO));
     }
 
 }

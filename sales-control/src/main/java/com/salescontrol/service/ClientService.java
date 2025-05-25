@@ -1,9 +1,6 @@
 package com.salescontrol.service;
 
-import com.salescontrol.dto.client.ClientGetDTO;
-import com.salescontrol.dto.client.ClientPostDTO;
-import com.salescontrol.dto.client.ClientWithOrderGetDTO;
-import com.salescontrol.dto.client.ClientWithOrderPostDTO;
+import com.salescontrol.dto.client.*;
 import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
 import com.salescontrol.exception.ClientNotFoundException;
@@ -99,9 +96,9 @@ public class ClientService {
     @Autowired
     public ClientMapperInterface clientMapperInterface;
 
-    public Optional<ClientGetDTO> updateClient(Integer id, ClientPostDTO clientPostDTO) {
+    public Optional<ClientGetDTO> updateClient(Integer id, ClientPutDTO clientPutDTO) {
         Client client = findById(id);
-        clientMapperInterface.updateClientFromDto(clientPostDTO, client);
+        clientMapperInterface.updateClientFromDto(clientPutDTO, client);
         clientRepository.save(client);
         return Optional.of(ClientMapper.INSTANCE.toClientGet(client));
     }

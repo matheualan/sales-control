@@ -1,6 +1,6 @@
 package com.salescontrol.mapper;
 
-import com.salescontrol.dto.client.ClientPostDTO;
+import com.salescontrol.dto.client.ClientPutDTO;
 import com.salescontrol.model.Client;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -11,6 +11,6 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface ClientMapperInterface {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateClientFromDto(ClientPostDTO dto, @MappingTarget Client entity);
+    void updateClientFromDto(ClientPutDTO dto, @MappingTarget Client entity);
 
 }
