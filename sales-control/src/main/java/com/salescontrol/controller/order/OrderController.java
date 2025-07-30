@@ -1,5 +1,8 @@
 package com.salescontrol.controller.order;
 
+import com.salescontrol.dto.client.ClientPostDTO;
+import com.salescontrol.dto.client.ClientWithOrderGetDTO;
+import com.salescontrol.dto.client.ClientWithOrderPostDTO;
 import com.salescontrol.dto.order.OrderGetDTO;
 import com.salescontrol.dto.order.OrderPostDTO;
 import com.salescontrol.model.Order;
@@ -28,6 +31,18 @@ public class OrderController {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST createOrder()"));
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(orderPostDTO));
     }
+
+//    @PostMapping(value = "/save-client-with-order")
+//    public ResponseEntity<ClientWithOrderPostDTO> saveClientWithOrder(@RequestBody ClientWithOrderPostDTO client) {
+//        return ResponseEntity.status(HttpStatus.OK).body(orderService.saveClientWithOrder(client));
+//    }
+
+//    Esse método tem 2 RequestBody o que nao eh permitido pelo Spring
+//    @PostMapping(value = "/save-client-with-order")
+//    public ResponseEntity<ClientWithOrderGetDTO> saveClientWithOrder(@RequestBody ClientPostDTO client,
+//                                                                     @RequestBody List<OrderPostDTO> orders) {
+//        return ResponseEntity.status(HttpStatus.OK).body(orderService.createClientWithOrder(client, orders));
+//    }
 
     @GetMapping(value = "/list-all-orders")
     public ResponseEntity<List<Order>> listAllOrders() {

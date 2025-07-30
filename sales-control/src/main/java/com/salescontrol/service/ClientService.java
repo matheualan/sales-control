@@ -6,18 +6,14 @@ import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
 import com.salescontrol.exception.ClientNotFoundException;
 import com.salescontrol.mapper.ClientMapper;
 import com.salescontrol.mapper.ClientMapperInterface;
+import com.salescontrol.mapper.OrderMapper;
 import com.salescontrol.model.Client;
 import com.salescontrol.model.Order;
 import com.salescontrol.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +23,7 @@ import java.util.Optional;
 public class ClientService {
 
     private final ClientRepository clientRepository;
+    private final ClientMapperInterface clientMapperInterface;
 
     public ClientPostDTO saveClient(ClientPostDTO clientPostDTO) {
         Client client = ClientMapper.INSTANCE.toClient(clientPostDTO);
@@ -62,10 +59,19 @@ public class ClientService {
         return ClientMapper.INSTANCE.toClientGet(client);
     }
 
-    public ClientGetDTO findByNickname(String nickname) {
-        Client client = clientRepository.findByNickname(nickname).orElseThrow(
-                () -> new ClientNotFoundException("Cliente com o apelido '" + nickname + "' não encontrado"));
-        return ClientMapper.INSTANCE.toClientGet(client);
+//    public ClientGetDTO findByNickname(String nickname) {
+//        Client client = clientRepository.findByNickname(nickname).orElseThrow(
+//                () -> new ClientNotFoundException("Cliente com o apelido '" + nickname + "' não encontrado"));
+//        return ClientMapper.INSTANCE.toClientGet(client);
+//    }
+
+    public List<ClientGetDTO> findByNickname(String nickname) {
+        List<Client> clients = clientRepository.findByNickname(nickname);
+        List<ClientGetDTO> clientsDto = new ArrayList<>();
+        for (Client client : clients) {
+            clientsDto.add(ClientMapper.INSTANCE.toClientGet(client));
+        }
+        return clientsDto;
     }
 
     public ClientGetDTO findByCpf(String cpf) {
@@ -93,9 +99,6 @@ public class ClientService {
         clientRepository.save(client);
     }
 
-    @Autowired
-    public ClientMapperInterface clientMapperInterface;
-
     public Optional<ClientGetDTO> updateClient(Integer id, ClientPutDTO clientPutDTO) {
         Client client = findById(id);
         clientMapperInterface.updateClientFromDto(clientPutDTO, client);
@@ -103,6 +106,7 @@ public class ClientService {
         return Optional.of(ClientMapper.INSTANCE.toClientGet(client));
     }
 
+//    Opção para metodo update usando reflection
 //    public Optional<ClientGetDTO> updateClient(Integer id, ClientPostDTO clientPostDTO) {
 //        var clientById = findById(id);
 //        copyNonNullProperties(clientPostDTO, clientById);
@@ -128,6 +132,8 @@ public class ClientService {
     //    LÓGICA DE CLIENT COM ORDER
     public ClientWithOrderPostDTO saveClientWithOrder(ClientWithOrderPostDTO clientWithOrderPostDTO) {
         Client client = ClientMapper.INSTANCE.toClient(clientWithOrderPostDTO);
+
+//        Order orderMapper = OrderMapper.INSTANCE.toOrder(clientWithOrderPostDTO.getOrder());
 
         for (Order order : client.getOrders()) {
             order.setClient(client);

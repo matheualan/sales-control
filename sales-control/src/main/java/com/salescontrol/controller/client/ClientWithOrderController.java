@@ -28,13 +28,7 @@ public class ClientWithOrderController {
     @PostMapping(value = "/save-client-with-order")
     public ResponseEntity<ClientWithOrderPostDTO> saveClientWithOrder(@RequestBody ClientWithOrderPostDTO client) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST saveClientWithOrder()"));
-        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.saveClientWithOrder(client));
-    }
-
-    @GetMapping(value = "/list-orders")
-    public ResponseEntity<List<Order>> listAllOrders() {
-        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET listAllOrders()"));
-        return ResponseEntity.status(HttpStatus.OK).body(orderService.findAllOrders());
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.saveClientWithOrder(client));
     }
 
     @GetMapping(value = "/list-clients-with-orders")

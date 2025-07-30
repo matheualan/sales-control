@@ -1,8 +1,12 @@
 package com.salescontrol.service;
 
+import com.salescontrol.dto.client.ClientPostDTO;
+import com.salescontrol.dto.client.ClientWithOrderGetDTO;
+import com.salescontrol.dto.client.ClientWithOrderPostDTO;
 import com.salescontrol.dto.order.OrderGetDTO;
 import com.salescontrol.dto.order.OrderPostDTO;
 import com.salescontrol.exception.ClientNotFoundException;
+import com.salescontrol.mapper.ClientMapper;
 import com.salescontrol.mapper.OrderMapper;
 import com.salescontrol.model.Client;
 import com.salescontrol.model.Order;
@@ -39,6 +43,22 @@ public class OrderService {
         orderRepository.save(order);
 
         return OrderMapper.INSTANCE.toOrderGet(order);
+    }
+
+    public ClientWithOrderPostDTO saveClientWithOrder(ClientWithOrderPostDTO clientWithOrderPostDTO) {
+        ClientPostDTO clientPostDTO = clientWithOrderPostDTO.getClientPostDTO();
+        List<OrderPostDTO> ordersPostDTO = clientWithOrderPostDTO.getOrdersPostDTO();
+
+        Client client = ClientMapper.INSTANCE.toClient(clientPostDTO);
+        clientRepository.save(client);
+
+        for (OrderPostDTO order : ordersPostDTO) {
+            int count = 0;
+            createOrder(clientWithOrderPostDTO.getOrdersPostDTO().get(count));
+            count++;
+        }
+
+        return clientWithOrderPostDTO;
     }
 
     public void deleteOrderById(Integer id) {

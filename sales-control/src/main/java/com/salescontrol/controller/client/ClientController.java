@@ -3,6 +3,7 @@ package com.salescontrol.controller.client;
 import com.salescontrol.dto.client.ClientGetDTO;
 import com.salescontrol.dto.client.ClientPostDTO;
 import com.salescontrol.dto.client.ClientPutDTO;
+import com.salescontrol.dto.client.ClientWithOrderPostDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
 import com.salescontrol.model.Client;
@@ -30,13 +31,14 @@ public class ClientController {
     private final ClientService clientService;
     private final DateUtil dateUtil;
 
+    @ApiResponse(responseCode = "201 - Created", description = "Deve retornar (201 - Created) ao salvar no banco de dados")
     @PostMapping(value = "/save-client")
     public ResponseEntity<ClientPostDTO> saveClient(@RequestBody @Valid ClientPostDTO clientPost) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST saveClient()"));
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.saveClient(clientPost));
     }
 
-    @ApiResponse(responseCode = "201 - Created", description = "Deve retornar 201 - Created ao salvar no banco de dados")
+    @ApiResponse(responseCode = "201 - Created", description = "Deve retornar (201 - Created) ao salvar no banco de dados")
     @PostMapping(value = "/save-multiple-clients")
     public ResponseEntity<List<ClientPostDTO>> saveMultipleClients(
             @RequestBody List<ClientPostDTO> multipleClients) {
@@ -76,7 +78,7 @@ public class ClientController {
     }
 
     @GetMapping(value = "/find-client-byNickname")
-    public ResponseEntity<ClientGetDTO> findByNickname(@RequestParam String nickname) {
+    public ResponseEntity<List<ClientGetDTO>> findByNickname(@RequestParam String nickname) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET findByNickname()"));
         return ResponseEntity.status(HttpStatus.OK).body(clientService.findByNickname(nickname));
     }
