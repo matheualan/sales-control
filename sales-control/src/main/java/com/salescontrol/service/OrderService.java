@@ -53,9 +53,7 @@ public class OrderService {
         clientRepository.save(client);
 
         for (OrderPostDTO order : ordersPostDTO) {
-            int count = 0;
-            createOrder(clientWithOrderPostDTO.getOrdersPostDTO().get(count));
-            count++;
+            createOrder(order);
         }
 
         return clientWithOrderPostDTO;
