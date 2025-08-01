@@ -3,7 +3,6 @@ package com.salescontrol.controller.client;
 import com.salescontrol.dto.client.ClientGetDTO;
 import com.salescontrol.dto.client.ClientPostDTO;
 import com.salescontrol.dto.client.ClientPutDTO;
-import com.salescontrol.dto.client.ClientWithOrderPostDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
 import com.salescontrol.model.Client;

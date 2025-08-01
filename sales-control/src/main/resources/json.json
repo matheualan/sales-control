@@ -44,6 +44,18 @@
       }
     ]
   },
+  {
+    "clientPostDTO": {
+      "name": "Matheus"
+    },
+    "ordersPostDTO": [
+      {
+        "nameClient": "Matheus",
+        "quantity": 10,
+        "price": 130
+      }
+    ]
+  },
 //JSON ADDRESSES
   {
     "cep": "12312312",

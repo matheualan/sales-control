@@ -6,7 +6,6 @@ import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
 import com.salescontrol.exception.ClientNotFoundException;
 import com.salescontrol.mapper.ClientMapper;
 import com.salescontrol.mapper.ClientMapperInterface;
-import com.salescontrol.mapper.OrderMapper;
 import com.salescontrol.model.Client;
 import com.salescontrol.model.Order;
 import com.salescontrol.repository.ClientRepository;

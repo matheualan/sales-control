@@ -1,7 +1,6 @@
 package com.salescontrol.service;
 
 import com.salescontrol.dto.client.ClientPostDTO;
-import com.salescontrol.dto.client.ClientWithOrderGetDTO;
 import com.salescontrol.dto.client.ClientWithOrderPostDTO;
 import com.salescontrol.dto.order.OrderGetDTO;
 import com.salescontrol.dto.order.OrderPostDTO;
