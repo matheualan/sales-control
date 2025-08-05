@@ -1,13 +1,15 @@
 package com.salescontrol.service;
 
-import com.salescontrol.dto.client.*;
+import com.salescontrol.dto.client.ClientGetDTO;
+import com.salescontrol.dto.client.ClientPostDTO;
+import com.salescontrol.dto.client.ClientPutDTO;
+import com.salescontrol.dto.client.ClientWithOrderGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
 import com.salescontrol.exception.ClientNotFoundException;
 import com.salescontrol.mapper.ClientMapper;
 import com.salescontrol.mapper.ClientMapperInterface;
 import com.salescontrol.model.Client;
-import com.salescontrol.model.Order;
 import com.salescontrol.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -127,20 +129,6 @@ public class ClientService {
 //            }
 //        }
 //    }
-
-    //    LÓGICA DE CLIENT COM ORDER
-    public ClientWithOrderPostDTO saveClientWithOrder(ClientWithOrderPostDTO clientWithOrderPostDTO) {
-        Client client = ClientMapper.INSTANCE.toClient(clientWithOrderPostDTO);
-
-//        Order orderMapper = OrderMapper.INSTANCE.toOrder(clientWithOrderPostDTO.getOrder());
-
-        for (Order order : client.getOrders()) {
-            order.setClient(client);
-        }
-
-        clientRepository.save(client);
-        return clientWithOrderPostDTO;
-    }
 
     public List<ClientWithOrderGetDTO> listClientWithOrder() {
         List<Client> clients = clientRepository.findAll();

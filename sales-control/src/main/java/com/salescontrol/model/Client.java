@@ -34,11 +34,9 @@ public class Client {
     @Column(unique = true)
     private String cpf;
 
-//    era persist
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
 
-//    era persist
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private List<Address> addresses = new ArrayList<>();

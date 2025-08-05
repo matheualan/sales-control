@@ -17,10 +17,10 @@ public class ClientForAddressPostDTO {
     private String nickname;
     private String cpf;
 
+    private List<AddressPostDTO> addresses;
+
     private Integer totalOrders = 0;
     private Double totalQuantity = 0.0;
     private BigDecimal totalPurchased = BigDecimal.ZERO;
-
-    private List<AddressPostDTO> addresses;
 
 }

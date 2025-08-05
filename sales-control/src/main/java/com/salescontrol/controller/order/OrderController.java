@@ -1,12 +1,10 @@
 package com.salescontrol.controller.order;
 
-import com.salescontrol.dto.client.ClientPostDTO;
-import com.salescontrol.dto.client.ClientWithOrderGetDTO;
-import com.salescontrol.dto.client.ClientWithOrderPostDTO;
 import com.salescontrol.dto.order.OrderGetDTO;
 import com.salescontrol.dto.order.OrderPostDTO;
 import com.salescontrol.model.Order;
 import com.salescontrol.service.OrderService;
+import com.salescontrol.service.RelatorioService;
 import com.salescontrol.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -14,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,24 +24,13 @@ public class OrderController {
 
     private final OrderService orderService;
     private final DateUtil dateUtil;
+    private final RelatorioService relatorioService;
 
     @PostMapping(value = "/create-order-byName")
     public ResponseEntity<OrderGetDTO> createOrderByName(@RequestBody OrderPostDTO orderPostDTO) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST createOrder()"));
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(orderPostDTO));
     }
-
-//    @PostMapping(value = "/save-client-with-order")
-//    public ResponseEntity<ClientWithOrderPostDTO> saveClientWithOrder(@RequestBody ClientWithOrderPostDTO client) {
-//        return ResponseEntity.status(HttpStatus.OK).body(orderService.saveClientWithOrder(client));
-//    }
-
-//    Esse método tem 2 RequestBody o que nao eh permitido pelo Spring
-//    @PostMapping(value = "/save-client-with-order")
-//    public ResponseEntity<ClientWithOrderGetDTO> saveClientWithOrder(@RequestBody ClientPostDTO client,
-//                                                                     @RequestBody List<OrderPostDTO> orders) {
-//        return ResponseEntity.status(HttpStatus.OK).body(orderService.createClientWithOrder(client, orders));
-//    }
 
     @GetMapping(value = "/list-all-orders")
     public ResponseEntity<List<Order>> listAllOrders() {
@@ -56,5 +44,21 @@ public class OrderController {
         orderService.deleteOrderById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping(value = "/total-orders")
+    public ResponseEntity<Integer> sumTotalOrders() {
+        return ResponseEntity.status(HttpStatus.OK).body(relatorioService.sumTotalOrders());
+    }
+
+    @GetMapping(value = "/total-quantities")
+    public ResponseEntity<Double> sumQuantities() {
+        return ResponseEntity.status(HttpStatus.OK).body(relatorioService.sumQuantites());
+    }
+
+    @GetMapping(value = "/total-prices")
+    public ResponseEntity<BigDecimal> sumPrices() {
+        return ResponseEntity.status(HttpStatus.OK).body(relatorioService.sumPrices());
+    }
+
 
 }
