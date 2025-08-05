@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/order")
@@ -45,20 +47,13 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping(value = "/total-orders")
-    public ResponseEntity<Integer> sumTotalOrders() {
-        return ResponseEntity.status(HttpStatus.OK).body(relatorioService.sumTotalOrders());
+    @GetMapping(value = "/totals")
+    public ResponseEntity<Map<String, Object>> getTotals() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("Total de pedidos: ", relatorioService.sumTotalOrders());
+        result.put("Total de quantidades: ", relatorioService.sumQuantites());
+        result.put("Total de valores: ", relatorioService.sumPrices());
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
-
-    @GetMapping(value = "/total-quantities")
-    public ResponseEntity<Double> sumQuantities() {
-        return ResponseEntity.status(HttpStatus.OK).body(relatorioService.sumQuantites());
-    }
-
-    @GetMapping(value = "/total-prices")
-    public ResponseEntity<BigDecimal> sumPrices() {
-        return ResponseEntity.status(HttpStatus.OK).body(relatorioService.sumPrices());
-    }
-
 
 }

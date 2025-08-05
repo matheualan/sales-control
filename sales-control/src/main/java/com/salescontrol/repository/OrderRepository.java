@@ -27,4 +27,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("SELECT COALESCE(SUM(o.price), 0) FROM Order o")
     BigDecimal sumPrices();
 
+
+
 }
