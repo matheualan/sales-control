@@ -8,11 +8,14 @@ import com.salescontrol.service.RelatorioService;
 import com.salescontrol.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +41,13 @@ public class OrderController {
     public ResponseEntity<List<Order>> listAllOrders() {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET listAllOrders()"));
         return ResponseEntity.status(HttpStatus.OK).body(orderService.findAllOrders());
+    }
+
+    @GetMapping(value = "/page")
+    public ResponseEntity<Page<OrderGetDTO>> orderPage(@PageableDefault(page = 0, size = 5,
+    direction = Sort.Direction.DESC, sort = "quantity") Pageable pageable) {
+        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET orderPage()"));
+        return ResponseEntity.status(HttpStatus.OK).body(orderService.pageOrders(pageable));
     }
 
     @DeleteMapping(value = "/delete-order-byId/{id}")

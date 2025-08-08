@@ -12,8 +12,10 @@ import com.salescontrol.model.Order;
 import com.salescontrol.repository.ClientRepository;
 import com.salescontrol.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -61,6 +63,24 @@ public class OrderService {
     public void deleteOrderById(Integer id) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found"));
         orderRepository.delete(order);
+    }
+
+//    public Page<OrderGetDTO> pageOrder(Pageable pageable) {
+////        PageRequest quantity = PageRequest.of(0, 3, Sort.Direction.DESC, "quantity");
+//        Page<Order> ordersPage = orderRepository.findAll(pageable);
+//        List<OrderGetDTO> listOrderGet = new ArrayList<>();
+//
+//        for (Order o : ordersPage) {
+//            OrderGetDTO orderGetDTO = OrderMapper.INSTANCE.toOrderGet(o);
+//            listOrderGet.add(orderGetDTO);
+//        }
+//
+//        return new PageImpl<>(listOrderGet);
+//    }
+
+//    Metodo para paginacao mais clean code
+    public Page<OrderGetDTO> pageOrders(Pageable pageable) {
+        return orderRepository.findAll(pageable).map(OrderMapper.INSTANCE::toOrderGet);
     }
 
 }

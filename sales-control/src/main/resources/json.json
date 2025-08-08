@@ -19,31 +19,6 @@
     "name": "Elococo",
     "cpf": "12312312315"
   },
-
-  {
-    "name": "Arnold",
-    "cpf": "22312312310",
-    "orders": [
-      {
-        "quantity": 10,
-        "price": 110
-      }
-    ]
-  },
-  {
-    "name": "Joana",
-    "cpf": "22312312311",
-    "orders": [
-      {
-        "quantity": 4,
-        "price": 60
-      },
-      {
-        "quantity": 15,
-        "price": 180
-      }
-    ]
-  },
   {
     "clientPostDTO": {
       "name": "Matheus"
@@ -53,6 +28,18 @@
         "nameClient": "Matheus",
         "quantity": 10,
         "price": 130
+      }
+    ]
+  },
+  {
+    "clientPostDTO": {
+      "name": "Alan"
+    },
+    "ordersPostDTO": [
+      {
+        "nameClient": "Alan",
+        "quantity": 20,
+        "price": 240
       }
     ]
   },
