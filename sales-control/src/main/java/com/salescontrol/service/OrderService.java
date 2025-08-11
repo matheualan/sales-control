@@ -12,10 +12,10 @@ import com.salescontrol.model.Order;
 import com.salescontrol.repository.ClientRepository;
 import com.salescontrol.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -78,7 +78,7 @@ public class OrderService {
 //        return new PageImpl<>(listOrderGet);
 //    }
 
-//    Metodo para paginacao mais clean code
+//    Metodo para paginacao usando stream deixando mais clean code
     public Page<OrderGetDTO> pageOrders(Pageable pageable) {
         return orderRepository.findAll(pageable).map(OrderMapper.INSTANCE::toOrderGet);
     }

@@ -59,6 +59,7 @@ public class OrderController {
 
     @GetMapping(value = "/totals")
     public ResponseEntity<Map<String, Object>> getTotals() {
+        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET getTotals()"));
         Map<String, Object> result = new HashMap<>();
         result.put("Total de pedidos: ", relatorioService.sumTotalOrders());
         result.put("Total de quantidades: ", relatorioService.sumQuantites());
