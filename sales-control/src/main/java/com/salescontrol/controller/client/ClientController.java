@@ -31,64 +31,64 @@ public class ClientController {
     private final DateUtil dateUtil;
 
     @ApiResponse(responseCode = "201 - Created", description = "Deve retornar (201 - Created) ao salvar no banco de dados")
-    @PostMapping(value = "/save-client")
+    @PostMapping(value = "/save")
     public ResponseEntity<ClientPostDTO> saveClient(@RequestBody @Valid ClientPostDTO clientPost) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST saveClient()"));
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.saveClient(clientPost));
     }
 
     @ApiResponse(responseCode = "201 - Created", description = "Deve retornar (201 - Created) ao salvar no banco de dados")
-    @PostMapping(value = "/save-multiple-clients")
+    @PostMapping(value = "/save-multiple")
     public ResponseEntity<List<ClientPostDTO>> saveMultipleClients(
             @RequestBody List<ClientPostDTO> multipleClients) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST saveMultipleClients()"));
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.saveMultipleClients(multipleClients));
     }
 
-    @PostMapping(value = "/save-client-with-address")
+    @PostMapping(value = "/save-with-address")
     public ResponseEntity<ClientForAddressPostDTO> saveClientWithAddress(
             @RequestBody ClientForAddressPostDTO clientWithAddress) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST saveClientWithAddress()"));
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.saveClientWithAddress(clientWithAddress));
     }
 
-    @GetMapping(value = "/list-clients-with-addresses")
+    @GetMapping(value = "/list-with-addresses")
     public ResponseEntity<List<ClientForAddressGetDTO>> listClientsWithAddresses() {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET listClientsWithAddresses()"));
         return ResponseEntity.status(HttpStatus.OK).body(clientService.listClientsWithAddresses());
     }
 
-    @GetMapping(value = "/list-client-entity")
+    @GetMapping(value = "/list-entity")
     public ResponseEntity<List<Client>> listClients() {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET listClients()"));
         return ResponseEntity.status(HttpStatus.OK).body(clientService.listClients());
     }
 
-    @GetMapping(value = "/list-client-dto")
+    @GetMapping(value = "/list-dto")
     public ResponseEntity<List<ClientGetDTO>> listClientsDTO() {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET listClientsDTO()"));
         return ResponseEntity.status(HttpStatus.OK).body(clientService.listClientsDTO());
     }
 
-    @GetMapping(value = "/find-client-byName")
+    @GetMapping(value = "/find-byName")
     public ResponseEntity<ClientGetDTO> findClientByName(@RequestParam String name) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET findClientByName()"));
         return ResponseEntity.status(HttpStatus.OK).body(clientService.findByName(name));
     }
 
-    @GetMapping(value = "/find-client-byNickname")
+    @GetMapping(value = "/find-byNickname")
     public ResponseEntity<List<ClientGetDTO>> findByNickname(@RequestParam String nickname) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET findByNickname()"));
         return ResponseEntity.status(HttpStatus.OK).body(clientService.findByNickname(nickname));
     }
 
-    @GetMapping(value = "/find-client-byCpf/{cpf}")
+    @GetMapping(value = "/find-byCpf/{cpf}")
     public ResponseEntity<ClientGetDTO> findClientByCpf(@PathVariable(value = "cpf") String cpf) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET findClientByCpf()"));
         return ResponseEntity.status(HttpStatus.OK).body(clientService.findByCpf(cpf));
     }
 
-    @DeleteMapping(value = "/delete-client-byId/{id}")
+    @DeleteMapping(value = "/delete-byId/{id}")
     public ResponseEntity<Void> deleteClientById(@PathVariable Integer id) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" DELETE deleteClientById()"));
         clientService.deleteClient(id);
@@ -96,14 +96,14 @@ public class ClientController {
     }
 
     @Hidden
-    @PutMapping(value = "/updated-client/{id}")
+    @PutMapping(value = "/updated/{id}")
     public ResponseEntity<Void> updatedClient(@PathVariable Integer id, @RequestBody ClientPostDTO clientPostDTO) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" PUT updateClient()"));
         clientService.updatedClient(id, clientPostDTO);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PatchMapping(value = "/update-client/{id}")
+    @PatchMapping(value = "/update/{id}")
     public ResponseEntity<Optional<ClientGetDTO>> updateClient(@PathVariable Integer id, @RequestBody ClientPutDTO clientPutDTO) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" PATCH updateClient()"));
         return ResponseEntity.status(HttpStatus.OK).body(clientService.updateClient(id, clientPutDTO));
