@@ -13,6 +13,8 @@ import com.salescontrol.model.Client;
 import com.salescontrol.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -54,6 +56,10 @@ public class ClientService {
         return clientsDTO;
     }
 
+    public Page<ClientGetDTO> clientsPageDTO(Pageable pageable) {
+        return null;
+    }
+
     public ClientGetDTO findByName(String name) {
         Client client = clientRepository.findByName(name).orElseThrow(
                 () -> new ClientNotFoundException("Cliente com o nome '" + name + "' não encontrado."));
@@ -93,18 +99,16 @@ public class ClientService {
     }
 
     public void updatedClient(Integer id, ClientPostDTO clientPostDTO) {
-        Client client = clientRepository.findById(id).orElseThrow(
-                () -> new ClientNotFoundException("Cliente não encontrado."));
-
+        Client client = findById(id);
         BeanUtils.copyProperties(clientPostDTO, client);
         clientRepository.save(client);
     }
 
-    public Optional<ClientGetDTO> updateClient(Integer id, ClientPutDTO clientPutDTO) {
+    public ClientGetDTO updateClient(Integer id, ClientPutDTO clientPutDTO) {
         Client client = findById(id);
         clientMapperInterface.updateClientFromDto(clientPutDTO, client);
         clientRepository.save(client);
-        return Optional.of(ClientMapper.INSTANCE.toClientGet(client));
+        return ClientMapper.INSTANCE.toClientGet(client);
     }
 
 //    Opção para metodo update usando reflection
@@ -139,8 +143,8 @@ public class ClientService {
         }
         return listDTO;
     }
-
 //    LÓGICA DE CLIENT COM ADDRESS
+
     public ClientForAddressPostDTO saveClientWithAddress(ClientForAddressPostDTO clientForAddressPostDTO) {
         Client client = ClientMapper.INSTANCE.toClient(clientForAddressPostDTO);
         clientRepository.save(client);
@@ -155,5 +159,4 @@ public class ClientService {
         }
         return listClientsWithAddresses;
     }
-
 }
