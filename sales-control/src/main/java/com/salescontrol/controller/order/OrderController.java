@@ -1,10 +1,11 @@
 package com.salescontrol.controller.order;
 
+import com.salescontrol.dto.client.ClientWithOrderPostDTO;
 import com.salescontrol.dto.order.OrderGetDTO;
 import com.salescontrol.dto.order.OrderPostDTO;
 import com.salescontrol.model.Order;
 import com.salescontrol.service.OrderService;
-import com.salescontrol.service.RelatorioService;
+import com.salescontrol.service.ReportService;
 import com.salescontrol.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,41 +30,47 @@ public class OrderController {
 
     private final OrderService orderService;
     private final DateUtil dateUtil;
-    private final RelatorioService relatorioService;
+    private final ReportService reportService;
 
-    @PostMapping(value = "/create-order-byName")
+    @PostMapping(value = "/create-byName")
     public ResponseEntity<OrderGetDTO> createOrderByName(@RequestBody OrderPostDTO orderPostDTO) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST createOrder()"));
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(orderPostDTO));
     }
 
-    @GetMapping(value = "/list-all-orders")
+    @PostMapping(value = "/create-client-with-order")
+    public ResponseEntity<ClientWithOrderPostDTO> saveClientWithOrder(@RequestBody ClientWithOrderPostDTO client) {
+        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST saveClientWithOrder()"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.saveClientWithOrder(client));
+    }
+
+    @GetMapping(value = "/list-all")
     public ResponseEntity<List<Order>> listAllOrders() {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET listAllOrders()"));
         return ResponseEntity.status(HttpStatus.OK).body(orderService.findAllOrders());
     }
 
-    @GetMapping(value = "/page")
+    @GetMapping(value = "/pagination")
     public ResponseEntity<Page<OrderGetDTO>> orderPage(@PageableDefault(page = 0, size = 5,
     direction = Sort.Direction.DESC, sort = "client") Pageable pageable) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET orderPage()"));
         return ResponseEntity.status(HttpStatus.OK).body(orderService.pageOrders(pageable));
     }
 
-    @DeleteMapping(value = "/delete-order-byId/{id}")
+    @DeleteMapping(value = "/delete-byId/{id}")
     public ResponseEntity<Void> deleteOrderById(@PathVariable Integer id) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" DELETE deleteOrderById()"));
         orderService.deleteOrderById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping(value = "/totals")
+    @GetMapping(value = "/reports-sales")
     public ResponseEntity<Map<String, Object>> getTotals() {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET getTotals()"));
         Map<String, Object> result = new HashMap<>();
-        result.put("Total de pedidos: ", relatorioService.sumTotalOrders());
-        result.put("Total de quantidades: ", relatorioService.sumQuantites());
-        result.put("Total de valores: ", relatorioService.sumPrices());
+        result.put("Total de pedidos: ", reportService.sumTotalOrders());
+        result.put("Total de quantidades: ", reportService.sumQuantites());
+        result.put("Total de valores: ", reportService.sumPrices());
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

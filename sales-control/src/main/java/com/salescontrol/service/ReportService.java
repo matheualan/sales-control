@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
-public class RelatorioService {
+public class ReportService {
 
     private final OrderRepository orderRepository;
 
