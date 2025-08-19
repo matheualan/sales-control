@@ -93,9 +93,8 @@ public class ClientService {
     }
 
     public void deleteClient(Integer id) {
-        Client client = clientRepository.findById(id).orElseThrow(
-                () -> new ClientNotFoundException("Cliente não encontrado."));
-        clientRepository.delete(client);
+//        Client client = findById(id);
+        clientRepository.delete(findById(id));
     }
 
     public void updatedClient(Integer id, ClientPostDTO clientPostDTO) {
