@@ -56,7 +56,7 @@ public class ClientService {
     }
 
     public Page<ClientGetDTO> clientsPageDTO(Pageable pageable) {
-        return null;
+        return clientRepository.findAll(pageable).map(ClientMapper.INSTANCE::toClientGet);
     }
 
     public ClientGetDTO findByName(String name) {

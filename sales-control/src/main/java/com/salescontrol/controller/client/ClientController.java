@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/client")
@@ -70,7 +69,7 @@ public class ClientController {
 
     @GetMapping(value = "/pagination")
     public ResponseEntity<Page<ClientGetDTO>> clientsPageDTO(@PageableDefault(page = 0, size = 10,
-    direction = Sort.Direction.ASC, sort = "idClient") Pageable pageable) {
+    direction = Sort.Direction.DESC, sort = "name") Pageable pageable) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET pageClientsDTO()"));
         return ResponseEntity.status(HttpStatus.OK).body(clientService.clientsPageDTO(pageable));
     }

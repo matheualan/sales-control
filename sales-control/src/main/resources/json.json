@@ -1,17 +1,5 @@
 [
   {
-    "name": "Matus",
-    "cpf": "12312312311"
-  },
-  {
-    "name": "Alen",
-    "cpf": "12312312312"
-  },
-  {
-    "name": "Pepe",
-    "cpf": "12312312313"
-  },
-  {
     "clientPostDTO": {
       "name": "Matheus"
     },
