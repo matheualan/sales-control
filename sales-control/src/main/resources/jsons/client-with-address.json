@@ -1,0 +1,35 @@
+[
+  {
+  "name": "Kaiq",
+  "cpf": "12312312316",
+  "addresses": [
+    {
+      "cep": "12312312",
+      "bairro": "aaaqqq",
+      "rua": "qqqaaa",
+      "referencia": "eeerrr",
+      "estado": "sa"
+    }
+  ]
+  },
+  {
+    "name": "Mayra",
+    "cpf": "12312312317",
+    "addresses": [
+      {
+        "cep": "12312312",
+        "bairro": "aaaqqq",
+        "rua": "qqqaaa",
+        "referencia": "eeerrr",
+        "estado": "sa"
+      },
+      {
+        "cep": "12312312",
+        "bairro": "aaaqqq",
+        "rua": "qqqaaa",
+        "referencia": "eeerrr",
+        "estado": "sa"
+      }
+    ]
+  }
+]

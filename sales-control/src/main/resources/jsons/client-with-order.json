@@ -1,0 +1,26 @@
+[
+  {
+    "clientPostDTO": {
+      "name": "Matheus"
+    },
+    "ordersPostDTO": [
+      {
+        "nameClient": "Matheus",
+        "quantity": 10,
+        "price": 130
+      }
+    ]
+  },
+  {
+    "clientPostDTO": {
+      "name": "Alan"
+    },
+    "ordersPostDTO": [
+      {
+        "nameClient": "Alan",
+        "quantity": 20,
+        "price": 240
+      }
+    ]
+  }
+]
