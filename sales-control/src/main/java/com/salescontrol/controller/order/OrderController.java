@@ -52,7 +52,7 @@ public class OrderController {
 
     @GetMapping(value = "/pagination")
     public ResponseEntity<Page<OrderGetDTO>> orderPage(@PageableDefault(page = 0, size = 5,
-    direction = Sort.Direction.DESC, sort = "client") Pageable pageable) {
+    direction = Sort.Direction.DESC, sort = "createdAt") Pageable pageable) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET orderPage()"));
         return ResponseEntity.status(HttpStatus.OK).body(orderService.pageOrders(pageable));
     }

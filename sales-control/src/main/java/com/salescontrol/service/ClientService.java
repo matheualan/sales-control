@@ -65,12 +65,6 @@ public class ClientService {
         return ClientMapper.INSTANCE.toClientGet(client);
     }
 
-//    public ClientGetDTO findByNickname(String nickname) {
-//        Client client = clientRepository.findByNickname(nickname).orElseThrow(
-//                () -> new ClientNotFoundException("Cliente com o apelido '" + nickname + "' não encontrado"));
-//        return ClientMapper.INSTANCE.toClientGet(client);
-//    }
-
     public List<ClientGetDTO> findByNickname(String nickname) {
         List<Client> clients = clientRepository.findByNickname(nickname);
         List<ClientGetDTO> clientsDto = new ArrayList<>();
@@ -92,7 +86,6 @@ public class ClientService {
     }
 
     public void deleteClient(Integer id) {
-//        Client client = findById(id);
         clientRepository.delete(findById(id));
     }
 
@@ -141,6 +134,7 @@ public class ClientService {
         }
         return listDTO;
     }
+
 //    LÓGICA DE CLIENT COM ADDRESS
 
     public ClientForAddressPostDTO saveClientWithAddress(ClientForAddressPostDTO clientForAddressPostDTO) {
