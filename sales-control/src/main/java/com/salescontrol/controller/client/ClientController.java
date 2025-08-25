@@ -57,7 +57,7 @@ public class ClientController {
 
     @GetMapping(value = "/list-entity")
     public ResponseEntity<List<Client>> listClients() {
-        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET listClients()"));
+//        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET listClients()"));
         return ResponseEntity.status(HttpStatus.OK).body(clientService.listClients());
     }
 
@@ -70,7 +70,7 @@ public class ClientController {
     @GetMapping(value = "/pagination")
     public ResponseEntity<Page<ClientGetDTO>> clientsPageDTO(@PageableDefault(page = 0, size = 10,
     direction = Sort.Direction.DESC, sort = "createdAt") Pageable pageable) {
-        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET pageClientsDTO()"));
+//        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET pageClientsDTO()"));
         return ResponseEntity.status(HttpStatus.OK).body(clientService.clientsPageDTO(pageable));
     }
 

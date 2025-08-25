@@ -1,5 +1,6 @@
 package com.salescontrol.dto.order;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.salescontrol.model.Client;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,9 +14,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class OrderGetDTO {
 
+    private Integer idOrder;
+
     private Double quantity;
+
     private BigDecimal price;
-    private Client client;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime createdAt;
 
+    private Client client;
 }
