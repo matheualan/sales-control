@@ -26,13 +26,13 @@ public class ClientWithOrderController {
 
     @PostMapping(value = "/save-client-with-order")
     public ResponseEntity<ClientWithOrderPostDTO> saveClientWithOrder(@RequestBody ClientWithOrderPostDTO client) {
-        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST saveClientWithOrder()"));
+        log.info(dateUtil.dateFormatterBR(LocalDateTime.now()).concat(" POST saveClientWithOrder()"));
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.saveClientWithOrder(client));
     }
 
     @GetMapping(value = "/list-clients-with-orders")
     public ResponseEntity<List<ClientWithOrderGetDTO>> listClientWithOrder() {
-        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET listClientWithOrder()"));
+        log.info(dateUtil.dateFormatterBR(LocalDateTime.now()).concat(" GET listClientWithOrder()"));
         return ResponseEntity.status(HttpStatus.OK).body(clientService.listClientWithOrder());
     }
 

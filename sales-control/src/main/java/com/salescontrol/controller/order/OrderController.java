@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,39 +33,33 @@ public class OrderController {
 
     @PostMapping(value = "/create-byName")
     public ResponseEntity<OrderGetDTO> createOrderByName(@RequestBody OrderPostDTO orderPostDTO) {
-        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST createOrder()"));
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(orderPostDTO));
     }
 
     @PostMapping(value = "/create-client-with-order")
     public ResponseEntity<ClientWithOrderPostDTO> saveClientWithOrder(@RequestBody ClientWithOrderPostDTO client) {
-        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST saveClientWithOrder()"));
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.saveClientWithOrder(client));
     }
 
     @GetMapping(value = "/list-all")
     public ResponseEntity<List<Order>> listAllOrders() {
-        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET listAllOrders()"));
         return ResponseEntity.status(HttpStatus.OK).body(orderService.findAllOrders());
     }
 
     @GetMapping(value = "/pagination")
     public ResponseEntity<Page<OrderGetDTO>> orderPage(@PageableDefault(page = 0, size = 5,
     direction = Sort.Direction.DESC, sort = "createdAt") Pageable pageable) {
-        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET orderPage()"));
         return ResponseEntity.status(HttpStatus.OK).body(orderService.pageOrders(pageable));
     }
 
     @DeleteMapping(value = "/delete-byId/{id}")
     public ResponseEntity<Void> deleteOrderById(@PathVariable Integer id) {
-        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" DELETE deleteOrderById()"));
         orderService.deleteOrderById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping(value = "/reports-sales")
     public ResponseEntity<Map<String, Object>> getTotals() {
-        log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" GET getTotals()"));
         Map<String, Object> result = new HashMap<>();
         result.put("Total de pedidos: ", reportService.sumTotalOrders());
         result.put("Total de quantidades: ", reportService.sumQuantites());

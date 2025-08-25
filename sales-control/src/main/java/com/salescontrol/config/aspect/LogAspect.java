@@ -1,5 +1,6 @@
 package com.salescontrol.config.aspect;
 
+import com.salescontrol.util.DateUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,33 +33,34 @@ public class LogAspect {
     @Around("controllerMethods()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         String dateHour = LocalDateTime.now().format(BR_FORMAT);
+        String dataHora = DateUtil.dateFormatterBR(LocalDateTime.now());
         String methodHttp = request.getMethod();
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getSignature().getDeclaringTypeName();
         Object[] args = joinPoint.getArgs();
 
-        log.info("[INIT] {} {} {} {} Args: {}",
-                dateHour, methodHttp, methodName, className, Arrays.toString(args));
+        log.info("[INIT] {} {} {}.{}() Args: {}",
+                dataHora, methodHttp, className, methodName, Arrays.toString(args));
 
         long countInit = System.currentTimeMillis();
 
         try {
-            Object result = joinPoint.proceed();
+            Object result = joinPoint.proceed(); //executa o metodo real no controller
+
             long duration = System.currentTimeMillis() - countInit;
 
-            log.info("[END] {} {} {} Status: {} Time: {} ms",
+            log.info("[END] {} {}.{}() Status: {} Time: {} ms",
                     methodHttp, className, methodName, response.getStatus(), duration);
 
             return result;
         } catch (Exception e) {
             long duration = System.currentTimeMillis() - countInit;
 
-            log.error("[ERROR] {} {} {} Time: {} ms - Message: {}",
-                    methodHttp, className, methodHttp, duration, e.getMessage(), e);
+            log.error("[ERROR] {} {}.{}() Time: {} ms - Message: {}",
+                    methodHttp, className, methodName, duration, e.getMessage(), e);
 
             throw e; // mantém a exceção para o fluxo normal de erro
         }
-
 
     }
 
