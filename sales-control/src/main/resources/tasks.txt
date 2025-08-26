@@ -16,7 +16,7 @@ PARA IMPLEMENTAR:
 4 - Criar nova entidade para trazer um relatório com os indices da aplicação/vendas/movimentação.
 5 - Ao criar um novo endereco buscando pelo CEP, associar diretamente a um client já existente na base de dados
 6 - Adc loggin-level no application.properties, verificar no projeto devdojo springboot essentials2
-7 - Tarefas
+7 - Mudar as classes que estão usando o MapStruct com classe abstrata para usar a Interface Mapper
 
 ===============================================================
 BUGS:

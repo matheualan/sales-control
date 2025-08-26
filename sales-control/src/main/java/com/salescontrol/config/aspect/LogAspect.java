@@ -24,15 +24,16 @@ public class LogAspect {
     private final HttpServletRequest request;
     private final HttpServletResponse response;
 
-    private static final DateTimeFormatter BR_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+//    private static final DateTimeFormatter BR_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
+    //intercepta as requisicoes nos controllers
     @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
     public void controllerMethods() {
     }
 
-    @Around("controllerMethods()")
+    @Around("controllerMethods()") //intercepta antes e depois do metodo real
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        String dateHour = LocalDateTime.now().format(BR_FORMAT);
+//        String dateHour = LocalDateTime.now().format(BR_FORMAT);
         String dataHora = DateUtil.dateFormatterBR(LocalDateTime.now());
         String methodHttp = request.getMethod();
         String methodName = joinPoint.getSignature().getName();
