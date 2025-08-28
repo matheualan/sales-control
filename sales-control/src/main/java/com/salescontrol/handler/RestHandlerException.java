@@ -17,26 +17,32 @@ public class RestHandlerException {
 
     @ExceptionHandler(ClientNotFoundException.class)
     public ResponseEntity<ClientNotFoundExceptionDetails> handlerClientNotFoundException(ClientNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ClientNotFoundExceptionDetails.builder()
-                .error("BAD REQUEST")
-                .status(HttpStatus.BAD_REQUEST.value())
-                .message(e.getMessage())
-                .developMessage(e.getClass().getName())
-                .timestamp(LocalDateTime.now())
-                .build());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ClientNotFoundExceptionDetails
+                        .builder()
+                        .error("BAD REQUEST")
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .message(e.getMessage())
+                        .developMessage(e.getClass().getName())
+                        .timestamp(LocalDateTime.now())
+                        .build());
     }
 
-//    Exception quando tenta cadastrar um CPF ja existente na base de dados
+    //    Exception quando tenta cadastrar um CPF ja existente na base de dados
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<UniqueIndexCpfExceptionDetails> handlerUniqueIndexCpfException(
             SQLIntegrityConstraintViolationException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(UniqueIndexCpfExceptionDetails.builder()
-                .error("BAD REQUEST")
-                .status(HttpStatus.BAD_REQUEST.value())
-                .message(e.getMessage().concat(" - CPF JÁ EXISTE NA BASE DE DADOS."))
-                .developMessage(e.getClass().getName())
-                .timestamp(LocalDateTime.now())
-                .build());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(UniqueIndexCpfExceptionDetails
+                        .builder()
+                        .error("BAD REQUEST")
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .message(e.getMessage().concat(" - CPF JÁ EXISTE NA BASE DE DADOS."))
+                        .developMessage(e.getClass().getName())
+                        .timestamp(LocalDateTime.now())
+                        .build());
     }
 
 }
