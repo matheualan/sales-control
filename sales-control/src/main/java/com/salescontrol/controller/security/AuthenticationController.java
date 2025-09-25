@@ -2,6 +2,7 @@ package com.salescontrol.controller.security;
 
 import com.salescontrol.dto.security.LoginDTO;
 import com.salescontrol.dto.security.RegisterDTO;
+import com.salescontrol.dto.security.TokenDTO;
 import com.salescontrol.model.security.Users;
 import com.salescontrol.repository.security.UsersRepository;
 import com.salescontrol.service.security.TokenService;
@@ -27,11 +28,11 @@ public class AuthenticationController {
     private final TokenService tokenService;
 
     @PostMapping(path = "/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO data) {
+    public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO data) {
         var auth = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         Authentication authenticate = authenticationManager.authenticate(auth);
         String token = tokenService.generateToken((Users) authenticate.getPrincipal());
-        return ResponseEntity.status(HttpStatus.OK).body(token);
+        return ResponseEntity.status(HttpStatus.OK).body(new TokenDTO(token));
     }
 
     @PostMapping(path = "/register")
