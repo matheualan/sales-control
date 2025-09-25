@@ -2,6 +2,7 @@ package com.salescontrol.config.security;
 
 import com.salescontrol.repository.security.UsersRepository;
 import com.salescontrol.service.security.TokenService;
+import com.salescontrol.service.security.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,13 +22,14 @@ public class MySecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
     private final UsersRepository usersRepository;
+    private final UserDetailsServiceImpl service;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = recoverToken(request);
         if (token != null) {
             String login = tokenService.validateToken(token);
-            UserDetails user = usersRepository.findByLogin(login);
+            UserDetails user = service.loadUserByUsername(login);
 
             var auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
