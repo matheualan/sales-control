@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,11 +59,7 @@ public class OrderController {
 
     @GetMapping(value = "/reports-sales")
     public ResponseEntity<Map<String, Object>> getTotals() {
-        Map<String, Object> result = new HashMap<>();
-        result.put("Total de pedidos: ", reportService.sumTotalOrders());
-        result.put("Total de quantidades: ", reportService.sumQuantites());
-        result.put("Total de valores: ", reportService.sumPrices());
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.status(HttpStatus.OK).body(reportService.getTotals());
     }
 
 }

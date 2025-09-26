@@ -4,7 +4,8 @@ import com.salescontrol.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -12,16 +13,12 @@ public class ReportService {
 
     private final OrderRepository orderRepository;
 
-    public Integer sumTotalOrders() {
-        return orderRepository.sumTotalOrders();
-    }
-
-    public Double sumQuantites() {
-        return orderRepository.sumQuantities();
-    }
-
-    public BigDecimal sumPrices() {
-        return orderRepository.sumPrices();
+    public Map<String, Object> getTotals() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("Total de pedidos: ", orderRepository.sumTotalOrders());
+        result.put("Quantidade total: ", orderRepository.sumQuantities());
+        result.put("Valor total: ", orderRepository.sumPrices());
+        return result;
     }
 
 }

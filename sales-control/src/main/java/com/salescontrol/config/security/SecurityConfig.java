@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register").permitAll()
-                            .requestMatchers(HttpMethod.GET, "/client/list-entity").hasRole("ADMIN")
+                            .requestMatchers(HttpMethod.GET, "/client/list-entity", "/order/reports-sales").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.GET, "/client/list-dto").permitAll();
 
                     if (Arrays.asList(env.getActiveProfiles()).contains("dev")) {
