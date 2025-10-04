@@ -40,7 +40,7 @@ public class TokenService {
                     .getSubject();
             return loginSubject;
         } catch (JWTVerificationException e) {
-            return "";
+            return null;
         }
     }
 
