@@ -1,4 +1,4 @@
-package com.salescontrol.config.aspect;
+package com.salescontrol.config;
 
 import com.salescontrol.util.DateUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +12,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 @Slf4j

@@ -33,20 +33,18 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register").permitAll()
-//                            .requestMatchers(HttpMethod.GET, "/client/list-entity", "/order/reports-sales").hasRole("ADMIN")
-                            .requestMatchers(HttpMethod.GET, "/order/reports-sales").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/order/reports-sales").hasRole("ADMIN")
                             .requestMatchers(HttpMethod.GET, "/client/list-dto").permitAll()
                             .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
 
                     if (Arrays.asList(env.getActiveProfiles()).contains("dev")) {
-//                        auth.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**").permitAll();
                         auth.requestMatchers("/h2-console/**").permitAll();
                     }
 
                     auth.anyRequest().permitAll();
                 }).addFilterBefore(mySecurityFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // H2 usa frames, precisa desabilitar para liberar o endpoint do console h2
+        // H2 usa frames, precisa desabilitar para liberar o console H2
         if (Arrays.asList(env.getActiveProfiles()).contains("dev")) {
             httpSecurity.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
         }
