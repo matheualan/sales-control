@@ -41,6 +41,7 @@ public class SecurityConfig {
                         auth.requestMatchers("/h2-console/**").permitAll();
                     }
 
+//                    auth.anyRequest().authenticated();
                     auth.anyRequest().permitAll();
                 }).addFilterBefore(mySecurityFilter, UsernamePasswordAuthenticationFilter.class);
 

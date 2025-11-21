@@ -23,7 +23,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("sales-control")
                     .withSubject(users.getLogin())
-                    .withExpiresAt(LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00")))
+                    .withExpiresAt(LocalDateTime.now().plusMinutes(10).toInstant(ZoneOffset.of("-03:00")))
                     .sign(algorithm);
         } catch (JWTCreationException e) {
             throw new JWTCreationException("Error while generating token", e);

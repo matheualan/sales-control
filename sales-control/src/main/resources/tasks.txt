@@ -6,6 +6,11 @@ Cadastrar Cliente com Endereço
 Cadastrar Endereço e associar a um cliente
 Cadastrar Pedido e associar a Cliente
 
+{
+  "login": "matheualan",
+  "password": "1995@02"
+}
+
 ===============================================================
 PARA IMPLEMENTAR:
 [OK] 1 - Adicionar campo apelido na entidade Client pois pode facilitar a busca no banco de dados

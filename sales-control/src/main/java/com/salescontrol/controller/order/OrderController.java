@@ -7,6 +7,7 @@ import com.salescontrol.model.Order;
 import com.salescontrol.service.OrderService;
 import com.salescontrol.service.ReportService;
 import com.salescontrol.util.DateUtil;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ import java.util.Map;
 @RequestMapping(value = "/order")
 @RequiredArgsConstructor
 @Log4j2
+@SecurityRequirement(name = "bearerAuth")
 public class OrderController {
 
     private final OrderService orderService;
