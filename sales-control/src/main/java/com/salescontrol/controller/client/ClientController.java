@@ -90,6 +90,11 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.OK).body(clientService.findByCpf(cpf));
     }
 
+    @GetMapping(value = "/findAll-ByName/{name}")
+    public ResponseEntity<List<ClientGetDTO>> findAllByName(@PathVariable String name) {
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.findAllByName(name));
+    }
+
     @ApiResponse(responseCode = "204", description = "NO_CONTENT")
     @DeleteMapping(value = "/delete-byId/{id}")
     public ResponseEntity<Void> deleteClientById(@PathVariable Integer id) {

@@ -86,7 +86,7 @@ class ClientRepositoryTest {
     @DisplayName("Return client by nickname when successful")
     void returnClientByNickname_WhenSuccessful() {
         Client clientSaved = clientRepository.save(ClientCreator.createValidClient());
-        Client clientByNickname = clientRepository.findByNickname(clientSaved.getNickname()).get();
+        Client clientByNickname = clientRepository.findByNickname(clientSaved.getNickname()).get(0);
 
         Assertions.assertThat(clientByNickname).isNotNull();
         Assertions.assertThat(clientByNickname.getIdClient()).isNotNull();
