@@ -64,7 +64,7 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.OK).body(clientService.listClientsDTO());
     }
 
-    @GetMapping(value = "/pagination")
+    @GetMapping(value = "/page")
     public ResponseEntity<Page<ClientGetDTO>> clientsPageDTO(@PageableDefault(page = 0, size = 10,
     direction = Sort.Direction.DESC, sort = "createdAt") Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(clientService.clientsPageDTO(pageable));

@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 @Data
-@Builder //Comentar essa anotacao para poder salvar novos clientes na API - Descomentar para realizar os testes
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder //Comentar essa anotacao para poder salvar novos clientes na API - Descomentar para realizar os testes
 @JsonIgnoreProperties(value = {"totalOrders", "totalQuantity", "totalPurchased"})
 public class ClientPostDTO {
 

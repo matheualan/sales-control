@@ -47,7 +47,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.findAllOrders());
     }
 
-    @GetMapping(value = "/pagination")
+    @GetMapping(value = "/page")
     public ResponseEntity<Page<OrderGetDTO>> orderPage(@PageableDefault(page = 0, size = 5,
     direction = Sort.Direction.DESC, sort = "createdAt") Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(orderService.pageOrders(pageable));
