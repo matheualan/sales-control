@@ -80,6 +80,17 @@ public class ClientService {
         return ClientMapper.INSTANCE.toClientGet(client);
     }
 
+    public List<ClientGetDTO> findAllByName(String name) {
+        List<Client> listByName = clientRepository.findByNameContaining(name);
+        List<ClientGetDTO> listByNameDTO = new ArrayList<>();
+
+        for (Client client : listByName) {
+            listByNameDTO.add(ClientMapper.INSTANCE.toClientGet(client));
+        }
+
+        return listByNameDTO;
+    }
+
     public Client findById(Integer id) {
         return clientRepository.findById(id).orElseThrow(
                 () -> new ClientNotFoundException("Cliente com o ID " + id + " não encontrado."));
