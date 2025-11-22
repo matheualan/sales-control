@@ -1,15 +1,20 @@
 package com.salescontrol.service;
 
+import com.salescontrol.dto.address.AddressPostDTO;
 import com.salescontrol.dto.client.ClientGetDTO;
 import com.salescontrol.dto.client.ClientPostDTO;
 import com.salescontrol.dto.client.ClientPutDTO;
 import com.salescontrol.dto.client.ClientWithOrderGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
+import com.salescontrol.dto.client.forAddress.ClientWithAddressViaCep;
 import com.salescontrol.exception.ClientNotFoundException;
+import com.salescontrol.mapper.AddressMapper;
 import com.salescontrol.mapper.ClientMapper;
 import com.salescontrol.mapper.ClientMapperInterface;
+import com.salescontrol.model.Address;
 import com.salescontrol.model.Client;
+import com.salescontrol.repository.AddressRepository;
 import com.salescontrol.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -17,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +32,7 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
     private final ClientMapperInterface clientMapperInterface;
+    private final ViaCepService viaCepService;
 
     public ClientPostDTO saveClient(ClientPostDTO clientPostDTO) {
         Client client = ClientMapper.INSTANCE.toClient(clientPostDTO);
@@ -162,4 +169,27 @@ public class ClientService {
         }
         return listClientsWithAddresses;
     }
+
+    private final AddressRepository addressRepository;
+    public ClientWithAddressViaCep saveClientWithAddressViaCep(ClientWithAddressViaCep clientWithAddressViaCep) {
+        AddressPostDTO addressPostDTO = viaCepService.buscarCep(clientWithAddressViaCep.getCep());
+        Address address = AddressMapper.INSTANCE.toAddress(addressPostDTO);
+        address.setComplemento(clientWithAddressViaCep.getComplemento());
+        Address savedAddress = addressRepository.save(address);
+
+        Client client = ClientMapper.INSTANCE.toClient(clientWithAddressViaCep);
+        client.setTotalOrders(0);
+        client.setTotalQuantity(0.0);
+        client.setTotalPurchased(BigDecimal.ZERO);
+
+        if (client.getAddresses() == null) {
+            client.setAddresses(new ArrayList<>());
+        }
+        client.getAddresses().add(savedAddress);
+        Client savedClient = clientRepository.save(client);
+
+        return ClientMapper.INSTANCE.toClientWithAddressViaCep(savedClient);
+    }
+
+
 }

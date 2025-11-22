@@ -5,6 +5,7 @@ import com.salescontrol.dto.client.ClientPostDTO;
 import com.salescontrol.dto.client.ClientPutDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
+import com.salescontrol.dto.client.forAddress.ClientWithAddressViaCep;
 import com.salescontrol.model.Client;
 import com.salescontrol.service.ClientService;
 import com.salescontrol.util.DateUtil;
@@ -32,7 +33,6 @@ import java.util.List;
 public class ClientController {
 
     private final ClientService clientService;
-    private final DateUtil dateUtil;
 
     @ApiResponse(responseCode = "201", description = "CREATED")
     @PostMapping(value = "/save")
@@ -52,6 +52,14 @@ public class ClientController {
     public ResponseEntity<ClientForAddressPostDTO> saveClientWithAddress(
             @RequestBody ClientForAddressPostDTO clientWithAddress) {
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.saveClientWithAddress(clientWithAddress));
+    }
+
+    @ApiResponse(responseCode = "201", description = "CREATED")
+    @PostMapping(value = "/save-with-address-viacep")
+    public ResponseEntity<ClientWithAddressViaCep> saveClientWithAddressViaCep(
+            @RequestBody ClientWithAddressViaCep clientWithAddressViaCep) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(clientService.saveClientWithAddressViaCep(clientWithAddressViaCep));
     }
 
     @GetMapping(value = "/list-entity")

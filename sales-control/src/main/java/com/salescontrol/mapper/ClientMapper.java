@@ -6,6 +6,7 @@ import com.salescontrol.dto.client.ClientWithOrderGetDTO;
 import com.salescontrol.dto.client.ClientWithOrderPostDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressGetDTO;
 import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
+import com.salescontrol.dto.client.forAddress.ClientWithAddressViaCep;
 import com.salescontrol.model.Client;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -18,9 +19,11 @@ public abstract class ClientMapper {
     public abstract Client toClient(ClientPostDTO clientPostDTO);
     public abstract Client toClient(ClientWithOrderPostDTO clientWithOrderPostDTO);
     public abstract Client toClient(ClientForAddressPostDTO clientForAddressPostDTO);
+    public abstract Client toClient(ClientWithAddressViaCep clientWithAddressViaCep);
 
     public abstract ClientGetDTO toClientGet(Client client);
     public abstract ClientWithOrderGetDTO toClientWithOrderGet(Client client);
     public abstract ClientForAddressGetDTO toClientWithAddress(Client client);
+    public abstract ClientWithAddressViaCep toClientWithAddressViaCep(Client client);
 
 }
