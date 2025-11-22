@@ -41,6 +41,14 @@
 //                .build();
 //    }
 //
+//    public static ClientPostDTO clientPostDTOTest() {
+//        return ClientPostDTO.builder()
+//                .name("Cliente DTO 1")
+//                .nickname("Apelido DTO 1")
+//                .cpf("CPF DTO 1")
+//                .build();
+//    }
+//
 //    public static ClientPostDTO clientPostDTO2() {
 //        return ClientPostDTO.builder()
 //                .name("Cliente DTO 2")
