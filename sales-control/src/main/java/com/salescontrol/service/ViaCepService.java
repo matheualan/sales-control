@@ -15,15 +15,21 @@ public class ViaCepService {
 
     private final AddressRepository addressRepository;
 
-    public AddressPostDTO buscarCep(String cep) {
+    public AddressPostDTO findAndSaveAddressByCep(String cep) {
         RestTemplate restTemplate = new RestTemplate();
         String urlViaCep = "https://viacep.com.br/ws/" + cep + "/json/";
         ResponseEntity<AddressPostDTO> response = restTemplate.getForEntity(urlViaCep, AddressPostDTO.class);
         AddressPostDTO addressPostDTO = response.getBody();
-//        AddressPostDTO addressPostDTO = AddressMapper.INSTANCE.toAddressPost(response);
         Address address = AddressMapper.INSTANCE.toAddress(addressPostDTO);
         addressRepository.save(address);
         return addressPostDTO;
+    }
+
+    public AddressPostDTO findAddressByCep(String cep) {
+        RestTemplate restTemplate = new RestTemplate();
+        String urlViaCep = "https://viacep.com.br/ws/" + cep + "/json/";
+        ResponseEntity<AddressPostDTO> response = restTemplate.getForEntity(urlViaCep, AddressPostDTO.class);
+        return response.getBody();
     }
 
 }

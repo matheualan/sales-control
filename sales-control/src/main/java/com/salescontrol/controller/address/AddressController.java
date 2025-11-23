@@ -33,7 +33,7 @@ public class AddressController {
     @PostMapping(value = "/save-address-byCep")
     public ResponseEntity<AddressPostDTO> saveAddressByCep(String cep) {
         log.info(dateUtil.dateFormatter(LocalDateTime.now()).concat(" POST saveAddressByCep()"));
-        return ResponseEntity.status(HttpStatus.CREATED).body(viaCepService.buscarCep(cep));
+        return ResponseEntity.status(HttpStatus.CREATED).body(viaCepService.findAddressByCep(cep));
     }
 
     @GetMapping(value = "/list-all-addresses")

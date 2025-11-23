@@ -33,6 +33,7 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final ClientMapperInterface clientMapperInterface;
     private final ViaCepService viaCepService;
+    private final AddressRepository addressRepository;
 
     public ClientPostDTO saveClient(ClientPostDTO clientPostDTO) {
         Client client = ClientMapper.INSTANCE.toClient(clientPostDTO);
@@ -170,12 +171,11 @@ public class ClientService {
         return listClientsWithAddresses;
     }
 
-    private final AddressRepository addressRepository;
-    public ClientWithAddressViaCep saveClientWithAddressViaCep(ClientWithAddressViaCep clientWithAddressViaCep) {
-        AddressPostDTO addressPostDTO = viaCepService.buscarCep(clientWithAddressViaCep.getCep());
+    public ClientForAddressGetDTO saveClientWithAddressViaCep(ClientWithAddressViaCep clientWithAddressViaCep) {
+        AddressPostDTO addressPostDTO = viaCepService.findAddressByCep(clientWithAddressViaCep.getCep());
         Address address = AddressMapper.INSTANCE.toAddress(addressPostDTO);
         address.setComplemento(clientWithAddressViaCep.getComplemento());
-        Address savedAddress = addressRepository.save(address);
+//        Address savedAddress = addressRepository.save(address);
 
         Client client = ClientMapper.INSTANCE.toClient(clientWithAddressViaCep);
         client.setTotalOrders(0);
@@ -185,11 +185,10 @@ public class ClientService {
         if (client.getAddresses() == null) {
             client.setAddresses(new ArrayList<>());
         }
-        client.getAddresses().add(savedAddress);
+        client.getAddresses().add(address);
         Client savedClient = clientRepository.save(client);
 
-        return ClientMapper.INSTANCE.toClientWithAddressViaCep(savedClient);
+        return ClientMapper.INSTANCE.toClientWithAddress(savedClient);
     }
-
 
 }

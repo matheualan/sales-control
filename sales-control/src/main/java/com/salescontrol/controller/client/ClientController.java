@@ -8,13 +8,11 @@ import com.salescontrol.dto.client.forAddress.ClientForAddressPostDTO;
 import com.salescontrol.dto.client.forAddress.ClientWithAddressViaCep;
 import com.salescontrol.model.Client;
 import com.salescontrol.service.ClientService;
-import com.salescontrol.util.DateUtil;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,7 +27,6 @@ import java.util.List;
 @RequestMapping(value = "/client")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "bearerAuth")
-//@Log4j2
 public class ClientController {
 
     private final ClientService clientService;
@@ -56,7 +53,7 @@ public class ClientController {
 
     @ApiResponse(responseCode = "201", description = "CREATED")
     @PostMapping(value = "/save-with-address-viacep")
-    public ResponseEntity<ClientWithAddressViaCep> saveClientWithAddressViaCep(
+    public ResponseEntity<ClientForAddressGetDTO> saveClientWithAddressViaCep(
             @RequestBody ClientWithAddressViaCep clientWithAddressViaCep) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(clientService.saveClientWithAddressViaCep(clientWithAddressViaCep));
